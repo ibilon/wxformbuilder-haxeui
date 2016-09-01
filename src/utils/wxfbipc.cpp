@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -60,7 +62,7 @@ bool wxFBIPC::VerifySingleInstance( const wxString& file, bool switchTo )
 	// Check for single instance
 
 	// Create lockfile/mutex name
-	wxString name = wxString::Format( wxT("wxFormBuilder-%s-%s"), wxGetUserId().c_str(), path.GetFullPath().c_str() );
+	wxString name = wxString::Format( wxT("HaxeUI-editor-%s-%s"), wxGetUserId().c_str(), path.GetFullPath().c_str() );
 
 	// Get forbidden characters
 	wxString forbidden = wxFileName::GetForbiddenChars();

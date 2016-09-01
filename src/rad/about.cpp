@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -76,7 +78,7 @@ AboutDialog::AboutDialog(wxWindow *parent, int id) : wxDialog(parent,id,wxT("Abo
 #if 0
   wxBoxSizer *sizer2;
   sizer2 = new wxBoxSizer(wxVERTICAL);
-  m_staticText2 = new wxStaticText(this,ID_DEFAULT,wxT("wxFormBuilder"),wxDefaultPosition,wxDefaultSize,0);
+  m_staticText2 = new wxStaticText(this,ID_DEFAULT,wxT("HaxeUI-editor"),wxDefaultPosition,wxDefaultSize,0);
   m_staticText2->SetFont(wxFont(12,74,90,92,false,wxT("Arial")));
   sizer2->Add(m_staticText2, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
   m_staticText3 = new wxStaticText(this,ID_DEFAULT,wxT("a RAD tool for wxWidgets framework"),wxDefaultPosition,wxDefaultSize,0);

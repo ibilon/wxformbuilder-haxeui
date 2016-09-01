@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -86,16 +88,12 @@ int MyApp::OnRun()
 	#endif
 
 	// Using a space so the initial 'w' will not be capitalized in wxLogGUI dialogs
-	wxApp::SetAppName( wxT( " wxFormBuilder" ) );
-
-	// Creating the wxConfig manually so there will be no space
-	// The old config (if any) is returned, delete it
-	delete wxConfigBase::Set( new wxConfig( wxT("wxFormBuilder") ) );
+	wxApp::SetAppName( wxT( "HaxeUI-editor" ) );
 
 	// Get the data directory
 	wxStandardPathsBase& stdPaths = wxStandardPaths::Get();
 	wxString dataDir = stdPaths.GetDataDir();
-	dataDir.Replace( GetAppName().c_str(), wxT("wxformbuilder") );
+	dataDir.Replace( GetAppName().c_str(), wxT("haxeui-editor") );
 
 	// Log to stderr while working on the command line
 	delete wxLog::SetActiveTarget( new wxLogStderr );
@@ -199,7 +197,7 @@ int MyApp::OnRun()
 	}
 	catch( wxFBException& ex )
 	{
-		wxLogError( _("Error loading application: %s\nwxFormBuilder cannot continue."),	ex.what() );
+		wxLogError( _("Error loading application: %s\nhaxeui-editor cannot continue."),	ex.what() );
 		wxLog::FlushActive();
 		return 5;
 	}

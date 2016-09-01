@@ -9,9 +9,9 @@ endif
 
 export CONFIG
 
-.PHONY: all clean wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin wxFormBuilder
+.PHONY: all clean wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
-all: wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin wxFormBuilder
+all: wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
 wxPropGrid:
 	@echo ==== Building wxPropGrid ====
@@ -53,8 +53,8 @@ wxadditions-mini-plugin: wxFlatNotebook wxPropGrid wxScintilla plugin-interface 
 	@echo ==== Building wxadditions-mini-plugin ====
 	@$(MAKE) --no-print-directory -C plugins/wxAdditions
 
-wxFormBuilder: wxFlatNotebook wxPropGrid wxScintilla TiCPP plugin-interface
-	@echo ==== Building wxFormBuilder ====
+HaxeUI-editor: wxFlatNotebook wxPropGrid wxScintilla TiCPP plugin-interface
+	@echo ==== Building HaxeUI-editor ====
 	@$(MAKE) --no-print-directory -C src
 
 clean:

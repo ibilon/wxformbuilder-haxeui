@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+//
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -42,7 +44,7 @@
 
 #if wxCHECK_VERSION( 2, 8, 0 )
 	#include <wx/richtext/richtextctrl.h>
-	#include "logo.xpm"
+	//#include "logo.xpm"
 	#include "smiley.xpm"
 	#include <wx/clrpicker.h>
 	#include <wx/fontpicker.h>
@@ -220,7 +222,7 @@ public:
 		r.EndBold();
 
 		r.Newline();
-		r.WriteImage(wxBitmap(logo_xpm));
+		//r.WriteImage(wxBitmap(logo_xpm));
 
 		r.EndAlignment();
 

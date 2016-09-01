@@ -6,7 +6,7 @@ ifndef CONFIG
 endif
 
 ifeq ($(CONFIG),Release)
-  BINDIR := ../../output/lib/wxformbuilder
+  BINDIR := ../../output/lib/haxeui-editor
   LIBDIR := ../lib
   OBJDIR := .objsu
   OUTDIR := ../lib
@@ -21,7 +21,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 ifeq ($(CONFIG),Debug)
-  BINDIR := ../../output/lib/wxformbuilder
+  BINDIR := ../../output/lib/haxeui-editor
   LIBDIR := ../lib
   OBJDIR := .objsud
   OUTDIR := ../lib

@@ -2,3 +2,4 @@
 *.d
 *.so
 output/bin/*
+.vscode/*

@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -97,7 +99,7 @@ m_style( style )
 	b = wxMin( 255, m_colour1.Blue() + 30 );
 
 	m_colour2 = wxColour( r, g, b );
-	m_titleText = wxT( "wxFormBuilder rocks!" );
+	m_titleText = wxT( "HaxeUI-editor rocks!" );
 	SetMinSize( wxSize( 100, 19 ) );
 }
 

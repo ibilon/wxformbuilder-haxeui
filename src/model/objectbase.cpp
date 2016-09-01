@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -546,7 +548,7 @@ void ObjectBase::Serialize( ticpp::Document* serializedDocument )
 	#endif
 	document.LinkEndChild( &dec );
 
-	ticpp::Element root( "wxFormBuilder_Project" );
+	ticpp::Element root( "haxeui-editor_Project" );
 
 	ticpp::Element fileVersion( "FileVersion" );
 	fileVersion.SetAttribute( "major", AppData()->m_fbpVerMajor );

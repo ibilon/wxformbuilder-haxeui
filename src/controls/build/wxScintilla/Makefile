@@ -6,10 +6,10 @@ ifndef CONFIG
 endif
 
 ifeq ($(CONFIG),Release)
-  BINDIR := ../../../../output/lib/wxformbuilder
+  BINDIR := ../../../../output/lib/haxeui-editor
   LIBDIR := ../../../..
   OBJDIR := .objsu
-  OUTDIR := ../../../../output/lib/wxformbuilder
+  OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_SCI" -D "MONOLITHIC" -D "LINK_LEXERS" -D "SCI_LEXER" -D "SCI_NAMESPACE" -D "__WX__" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "GTK" -D "NDEBUG" -I "../../include" -I "../../src/wxScintilla" -I "../../src/wxScintilla/scintilla/include" -I "../../src/wxScintilla/scintilla/src"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -O3 -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)
@@ -21,10 +21,10 @@ ifeq ($(CONFIG),Release)
 endif
 
 ifeq ($(CONFIG),Debug)
-  BINDIR := ../../../../output/lib/wxformbuilder
+  BINDIR := ../../../../output/lib/haxeui-editor
   LIBDIR := ../../../..
   OBJDIR := .objsud
-  OUTDIR := ../../../../output/lib/wxformbuilder
+  OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_SCI" -D "MONOLITHIC" -D "LINK_LEXERS" -D "SCI_LEXER" -D "SCI_NAMESPACE" -D "__WX__" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "GTK" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../include" -I "../../src/wxScintilla" -I "../../src/wxScintilla/scintilla/include" -I "../../src/wxScintilla/scintilla/src"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -g -fPIC -O0 `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)

@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -1271,7 +1273,7 @@ bool ApplicationData::LoadProject( const wxString &file, bool checkSingleInstanc
 
 		if ( newer )
 		{
-			wxMessageBox( wxT( "This project file is newer than this version of wxFormBuilder.\n" )
+			wxMessageBox( wxT( "This project file is newer than this version of haxeui-editor.\n" )
 			              wxT( "It cannot be opened.\n\n" )
 			              wxT( "Please download an updated version from http://www.wxFormBuilder.org" ), _( "New Version" ), wxICON_ERROR );
 			return false;
@@ -1362,7 +1364,7 @@ bool ApplicationData::ConvertProject( const wxString& path, int fileMajor, int f
 			doc.LinkEndChild( new ticpp::Declaration( "1.0", "UTF-8", "yes" ) );
 
 			// Add the root element, with file version
-			ticpp::Element* newRoot = new ticpp::Element( "wxFormBuilder_Project" );
+			ticpp::Element* newRoot = new ticpp::Element( "HaxeUI-editor_Project" );
 
 			ticpp::Element* fileVersion = new ticpp::Element( "FileVersion" );
 			fileVersion->SetAttribute( "major", m_fbpVerMajor );

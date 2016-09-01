@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -150,7 +152,7 @@ PObjectBase wxFBDataObject::GetObj()
 
 		if ( major > AppData()->m_fbpVerMajor || ( AppData()->m_fbpVerMajor == major && minor > AppData()->m_fbpVerMinor ) )
 		{
-			wxLogError( _("This object cannot be pasted because it is from a newer version of wxFormBuilder") );
+			wxLogError( _("This object cannot be pasted because it is from a newer version of haxeui-editor") );
 		}
 
 		if ( major < AppData()->m_fbpVerMajor || ( AppData()->m_fbpVerMajor == major && minor < AppData()->m_fbpVerMinor ) )

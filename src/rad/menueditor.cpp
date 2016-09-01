@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -482,7 +484,7 @@ void MenuEditor::OnRemoveMenuItem(wxCommandEvent& )
         {
             int res = wxMessageBox(
                 wxT("The children of the selected item will be eliminated too. Are you sure you want to continue?"),
-                wxT("wxFormBuilder"), wxYES_NO);
+                wxT("HaxeUI-editor"), wxYES_NO);
             if (res == wxYES)
             {
                 long item = sel + 1;

@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -747,7 +749,7 @@ public:
 		// Error checking
 		if ( !( obj && book && page ) )
 		{
-			wxLogError( _("AuiNotebookPageComponent is missing its wxFormBuilder object(%i), its parent(%i), or its child(%i)"), obj, book, page );
+			wxLogError( _("AuiNotebookPageComponent is missing its haxeui-editor object(%i), its parent(%i), or its child(%i)"), obj, book, page );
 			return;
 		}
 

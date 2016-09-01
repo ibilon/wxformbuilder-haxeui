@@ -6,10 +6,10 @@ ifndef CONFIG
 endif
 
 ifeq ($(CONFIG),Release)
-  BINDIR := ../../../../output/lib/wxformbuilder
+  BINDIR := ../../../../output/lib/haxeui-editor
   LIBDIR := ../../../..
   OBJDIR := .objsu
-  OUTDIR := ../../../../output/lib/wxformbuilder
+  OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../include"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -O3 -Wall -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)
@@ -21,10 +21,10 @@ ifeq ($(CONFIG),Release)
 endif
 
 ifeq ($(CONFIG),Debug)
-  BINDIR := ../../../../output/lib/wxformbuilder
+  BINDIR := ../../../../output/lib/haxeui-editor
   LIBDIR := ../../../..
   OBJDIR := .objsud
-  OUTDIR := ../../../../output/lib/wxformbuilder
+  OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../include"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -g -Wall -fPIC -O0 `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)

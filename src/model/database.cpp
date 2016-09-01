@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -254,7 +256,7 @@ PObjectBase ObjectDatabase::CreateObject( std::string classname, PObjectBase par
 	if (!objInfo)
 	{
 		THROW_WXFBEX( 	wxT("Unknown Object Type: ") << _WXSTR(classname) << wxT("\n")
-						wxT("The most likely causes are that this copy of wxFormBuilder is out of date, or that there is a plugin missing.\n")
+						wxT("The most likely causes are that this copy of haxeui-editor is out of date, or that there is a plugin missing.\n")
 						wxT("Please check at http://www.wxFormBuilder.org") << wxT("\n") )
 	}
 
@@ -704,7 +706,7 @@ void ObjectDatabase::SetupPackage( const wxString& file, const wxString& path, P
 	#else
 		wxStandardPathsBase& stdpaths = wxStandardPaths::Get();
 		wxString libPath = stdpaths.GetPluginsDir();
-		libPath.Replace( wxTheApp->GetAppName().c_str(), wxT("wxformbuilder") );
+		libPath.Replace( wxTheApp->GetAppName().c_str(), wxT("haxeui-editor") );
 	#endif
 
 	try

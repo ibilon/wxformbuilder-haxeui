@@ -1,7 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// wxFormBuilder - A Visual Dialog Editor for wxWidgets.
-// Copyright (C) 2005 José Antonio Hurtado
+// HaxeUI-editor - A visual UI editor for HaxeUI.
+// Copyright (C) 2016 Valentin Lemière
+// 
+// Based on code from wxFormBuilder by José Antonio Hurtado
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -97,7 +99,7 @@ namespace BookUtils
 		// Error checking
 		if ( !( obj && book && page ) )
 		{
-			wxLogError( _("%s is missing its wxFormBuilder object(%i), its parent(%i), or its child(%i)"), name.c_str(), obj, book, page );
+			wxLogError( _("%s is missing its haxeui-editor object(%i), its parent(%i), or its child(%i)"), name.c_str(), obj, book, page );
 			return;
 		}
 
@@ -112,7 +114,7 @@ namespace BookUtils
 		IObject* parentObj = manager->GetIObject( wxparent );
 		if ( !parentObj )
 		{
-			wxLogError( _("%s's parent is missing its wxFormBuilder object"), name.c_str() );
+			wxLogError( _("%s's parent is missing its haxeui-editor object"), name.c_str() );
 			return;
 		}
 
