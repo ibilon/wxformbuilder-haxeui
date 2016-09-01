@@ -62,14 +62,14 @@
 
 void LogStack();
 
-static const wxCmdLineEntryDesc s_cmdLineDesc[] =
+/*static const wxCmdLineEntryDesc s_cmdLineDesc[] =
 {
 	{ wxCMD_LINE_SWITCH, wxT("g"), wxT("generate"),	wxT("Generate code from passed file.") },
 	{ wxCMD_LINE_OPTION, wxT("l"), wxT("language"),	wxT("Override the code_generation property from the passed file and generate the passed languages. Separate multiple languages with commas.") },
 	{ wxCMD_LINE_SWITCH, wxT("h"), wxT("help"),		wxT("Show this help message."), wxCMD_LINE_VAL_STRING, wxCMD_LINE_OPTION_HELP  },
 	{ wxCMD_LINE_PARAM, NULL, NULL,	wxT("File to open."), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
 	{ wxCMD_LINE_NONE }
-};
+};*/
 
 IMPLEMENT_APP( MyApp )
 
@@ -102,22 +102,22 @@ int MyApp::OnRun()
 	delete wxMessageOutput::Set( new wxMessageOutputLog );
 
 	// Parse command line
-	wxCmdLineParser parser( s_cmdLineDesc, argc, argv );
+	/*wxCmdLineParser parser( s_cmdLineDesc, argc, argv );
 	if ( 0 != parser.Parse() )
 	{
 		return 1;
-	}
+	}*/
 
 	// Get project to load
 	wxString projectToLoad = wxEmptyString;
-	if ( parser.GetParamCount() > 0 )
+	/*if ( parser.GetParamCount() > 0 )
 	{
 		projectToLoad = parser.GetParam();
-	}
+	}*/
 
 	bool justGenerate = false;
 	wxString language;
-	bool hasLanguage = parser.Found( wxT("l"), &language );
+	/*bool hasLanguage = parser.Found( wxT("l"), &language );
 	if ( parser.Found( wxT("g") ) )
 	{
 		if ( projectToLoad.empty() )
@@ -139,7 +139,7 @@ int MyApp::OnRun()
 		// generate code
 		justGenerate = true;
 	}
-	else
+	else*/
 	{
 		delete wxLog::SetActiveTarget( new wxLogGui );
 	}
@@ -271,7 +271,7 @@ int MyApp::OnRun()
 	{
 		if ( AppData()->LoadProject( projectToLoad, !justGenerate ) )
 		{
-			if ( justGenerate )
+			/*if ( justGenerate )
 			{
 				if ( hasLanguage )
 				{
@@ -285,7 +285,7 @@ int MyApp::OnRun()
 				AppData()->GenerateCode( false );
 				return 0;
 			}
-			else
+			else*/
 			{
 				m_frame->InsertRecentProject( projectToLoad );
 				return wxApp::OnRun();

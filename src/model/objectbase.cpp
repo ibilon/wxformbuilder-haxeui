@@ -247,7 +247,7 @@ m_expanded( true )
 {
 	m_class = class_name;
 
-	Debug::Print(wxT("new ObjectBase"));
+	//Debug::Print(wxT("new ObjectBase"));
 }
 
 ObjectBase::~ObjectBase()
@@ -261,7 +261,7 @@ ObjectBase::~ObjectBase()
 		parent->RemoveChild(pobj);
 	}
 
-	Debug::Print(wxT("delete ObjectBase"));
+	//Debug::Print(wxT("delete ObjectBase"));
 }
 
 wxString ObjectBase::GetIndentString(int indent)
@@ -312,7 +312,7 @@ PEvent ObjectBase::GetEvent (wxString name)
 	if ( it != m_events.end() )
 		return it->second;
 
-	Debug::Print(wxT("[ObjectBase::GetEvent] Event %s not found!"),name.c_str());
+	//Debug::Print(wxT("[ObjectBase::GetEvent] Event %s not found!"),name.c_str());
 	return PEvent();
 }
 

@@ -658,7 +658,7 @@ void ObjectDatabase::LoadPlugins( PwxFBManager manager )
 							if ( !addedPackage.second )
 							{
 								addedPackage.first->second->AppendPackage( packageIt->second );
-								Debug::Print( _("Merged plugins named \"%s\""), packageIt->second->GetPackageName().c_str() );
+								//Debug::Print( _("Merged plugins named \"%s\""), packageIt->second->GetPackageName().c_str() );
 							}
 						}
 						catch ( wxFBException& ex )
@@ -1294,7 +1294,7 @@ void ObjectDatabase::ImportComponentLibrary( wxString libfile, PwxFBManager mana
 
 #endif
 
-		Debug::Print( wxT("[Database::ImportComponentLibrary] Importing %s library"), path.c_str() );
+		//Debug::Print( wxT("[Database::ImportComponentLibrary] Importing %s library"), path.c_str() );
 
 	// Get the component library
 	IComponentLibrary* comp_lib = GetComponentLibrary( (IManager*)manager.get() );
@@ -1316,7 +1316,7 @@ void ObjectDatabase::ImportComponentLibrary( wxString libfile, PwxFBManager mana
 		}
 		else
 		{
-			Debug::Print( wxT("ObjectInfo for <%s> not found while loading library <%s>"), class_name.c_str(), path.c_str() );
+			//Debug::Print( wxT("ObjectInfo for <%s> not found while loading library <%s>"), class_name.c_str(), path.c_str() );
 		}
 	}
 

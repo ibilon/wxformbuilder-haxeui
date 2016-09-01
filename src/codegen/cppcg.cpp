@@ -1553,7 +1553,7 @@ void CppCodeGenerator::GenConstruction(PObjectBase obj, bool is_widget )
 		}
 		else
 		{
-			Debug::Print( wxT("SizerItem child is not a Spacer and is not a subclass of wxWindow or of sizer.") );
+			//Debug::Print( wxT("SizerItem child is not a Spacer and is not a subclass of wxWindow or of sizer.") );
 			return;
 		}
 

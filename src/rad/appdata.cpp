@@ -721,7 +721,7 @@ void ApplicationData::CreateObject( wxString name )
 {
 	try
 	{
-		Debug::Print( wxT( "[ApplicationData::CreateObject] New %s" ), name.c_str() );
+		//Debug::Print( wxT( "[ApplicationData::CreateObject] New %s" ), name.c_str() );
 
 		PObjectBase old_selected = GetSelectedObject();
 		PObjectBase parent = old_selected;
@@ -2484,7 +2484,7 @@ void ApplicationData::NotifyEvent( wxFBEvent& event )
 	if ( count == 0 )
 	{
 		count++;
-		Debug::Print( wxT( "event: %s" ), event.GetEventName().c_str() );
+		//Debug::Print( wxT( "event: %s" ), event.GetEventName().c_str() );
 		std::vector< wxEvtHandler* >::iterator handler;
 
 		for ( handler = m_handlers.begin(); handler != m_handlers.end(); handler++ )
@@ -2494,7 +2494,7 @@ void ApplicationData::NotifyEvent( wxFBEvent& event )
 	}
 	else
 	{
-		Debug::Print( wxT( "Pending event: %s" ), event.GetEventName().c_str() );
+		//Debug::Print( wxT( "Pending event: %s" ), event.GetEventName().c_str() );
 		std::vector< wxEvtHandler* >::iterator handler;
 
 		for ( handler = m_handlers.begin(); handler != m_handlers.end(); handler++ )

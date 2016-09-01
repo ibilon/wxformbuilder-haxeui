@@ -730,7 +730,7 @@ void ObjectInspector::Create( bool force )
 			// Select previously selected page, or first page
 			if ( m_pg->GetPageCount() > 0 )
 			{
-				int pageIndex = m_pg->GetPageByName( pageName );
+				int pageIndex = m_pg->GetPageByName( pageName.c_str() );
 				if ( wxNOT_FOUND != pageIndex )
 				{
 					m_pg->SelectPage( pageIndex );
@@ -817,7 +817,7 @@ wxPGProperty* ObjectInspector::GetProperty(PProperty prop)
 		unsigned int i = 0;
 		for( it = options.begin(); it != options.end(); ++it )
 		{
-			constants.Add( it->first, 1 << i++ );
+			constants.Add( it->first.c_str(), 1 << i++ );
 		}
 
 		int val = StringToBits(prop->GetValueAsString(), constants);
@@ -858,7 +858,7 @@ wxPGProperty* ObjectInspector::GetProperty(PProperty prop)
 		unsigned int i = 0;
 		for( it = options.begin(); it != options.end(); ++it )
 		{
-			constants.Add( it->first, i++ );
+			constants.Add( it->first.c_str(), i++ );
 			if ( it->first == value )
 			{
 				// Save help

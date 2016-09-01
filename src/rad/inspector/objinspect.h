@@ -119,7 +119,7 @@ class ObjectInspector : public wxPanel
 
 
 		wxPropertyGridManager* pg = ( addingEvents ? m_eg : m_pg );
-		int pageIndex = pg->GetPageByName( pageName );
+		int pageIndex = pg->GetPageByName( pageName.c_str() );
 		if ( wxNOT_FOUND == pageIndex )
 		{
 			pg->AddPage( pageName, obj_info->GetSmallIconFile() );
