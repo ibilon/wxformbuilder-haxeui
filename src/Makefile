@@ -13,7 +13,7 @@ ifeq ($(CONFIG),Release)
   CPPFLAGS := -MMD -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "boost" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -O3 -Wall -fno-strict-aliasing `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)
-  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -mwindows -s -Wl,-rpath,/usr/lib/wxformbuilder `wx-config --libs` -L"../output/lib/wxformbuilder" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lwx_gtk2u_scintilla-2.8_wxfb -lticpp -lfbPluginInterface
+  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s -Wl,-rpath,/usr/lib/wxformbuilder `wx-config --libs` -L"../output/lib/wxformbuilder" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lwx_gtk2u_scintilla-2.8_wxfb -lticpp -lfbPluginInterface
   LDDEPS := ../output/lib/wxformbuilder/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../output/lib/wxformbuilder/libwx_gtk2u_propgrid-2.8_wxfb.so ../output/lib/wxformbuilder/libwx_gtk2u_scintilla-2.8_wxfb.so ../sdk/lib/libticpp.a ../sdk/lib/libfbPluginInterface.a
   RESFLAGS := -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "boost" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   TARGET := wxformbuilder
@@ -28,7 +28,7 @@ ifeq ($(CONFIG),Debug)
   CPPFLAGS := -MMD -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "boost" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -Wall -O0 `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS)
-  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -mwindows -Wl,-rpath,/usr/lib/wxformbuilder `wx-config --debug=no --libs` -L"../output/lib/wxformbuilder" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lwx_gtk2u_scintilla-2.8_wxfb -lticppd -lfbPluginInterfaced
+  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -Wl,-rpath,/usr/lib/wxformbuilder `wx-config --debug=no --libs` -L"../output/lib/wxformbuilder" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lwx_gtk2u_scintilla-2.8_wxfb -lticppd -lfbPluginInterfaced
   LDDEPS := ../output/lib/wxformbuilder/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../output/lib/wxformbuilder/libwx_gtk2u_propgrid-2.8_wxfb.so ../output/lib/wxformbuilder/libwx_gtk2u_scintilla-2.8_wxfb.so ../sdk/lib/libticppd.a ../sdk/lib/libfbPluginInterfaced.a
   RESFLAGS := -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "boost" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   TARGET := wxformbuilderd
