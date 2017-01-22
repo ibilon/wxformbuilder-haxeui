@@ -11,17 +11,13 @@ export CONFIG
 
 CXXFLAGS := -std=c++11
 
-.PHONY: all clean wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
+.PHONY: all clean wxPropGrid plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
-all: wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
+all: wxPropGrid plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
 wxPropGrid:
 	@echo ==== Building wxPropGrid ====
 	@$(MAKE) --no-print-directory -C src/controls/build/propgrid
-
-wxFlatNotebook:
-	@echo ==== Building wxFlatNotebook ====
-	@$(MAKE) --no-print-directory -C src/controls/build/wxFlatNotebook
 
 plugin-interface: TiCPP
 	@echo ==== Building plugin-interface ====
@@ -47,17 +43,16 @@ layout-components-plugin: plugin-interface TiCPP
 	@echo ==== Building layout-components-plugin ====
 	@$(MAKE) --no-print-directory -C plugins/layout
 
-wxadditions-mini-plugin: wxFlatNotebook wxPropGrid plugin-interface TiCPP
+wxadditions-mini-plugin: wxPropGrid plugin-interface TiCPP
 	@echo ==== Building wxadditions-mini-plugin ====
 	@$(MAKE) --no-print-directory -C plugins/wxAdditions
 
-HaxeUI-editor: wxFlatNotebook wxPropGrid TiCPP plugin-interface
+HaxeUI-editor: wxPropGrid TiCPP plugin-interface
 	@echo ==== Building HaxeUI-editor ====
 	@$(MAKE) --no-print-directory -C src
 
 clean:
 	@$(MAKE) --no-print-directory -C src/controls/build/propgrid clean
-	@$(MAKE) --no-print-directory -C src/controls/build/wxFlatNotebook clean
 	@$(MAKE) --no-print-directory -C sdk/plugin_interface clean
 	@$(MAKE) --no-print-directory -C sdk/tinyxml clean
 	@$(MAKE) --no-print-directory -C plugins/additional clean

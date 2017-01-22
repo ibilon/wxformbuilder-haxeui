@@ -53,7 +53,7 @@ else
 	package.libpaths = { "../output/lib/wxformbuilder", "../sdk/lib" }
 end
 -- Set the libraries it links to.
-package.links = { "wxFlatNotebook", "wxPropGrid", "TiCPP", "plugin-interface" }
+package.links = { "wxPropGrid", "TiCPP", "plugin-interface" }
 
 -- Add libraries and build options for stack trace in MinGW
 if ( windows and ( (string.find( target or "", ".*-gcc" )) or (target == "gnu") ) ) then
@@ -74,7 +74,7 @@ else
 end
 --package.libdir = "../../lib"
 -- Set the defines.
-package.defines = { "WXUSINGDLL_FNB", "TIXML_USE_TICPP", "NO_GCC_PRAGMA", "SCI_NAMESPACE" }
+package.defines = { "TIXML_USE_TICPP", "NO_GCC_PRAGMA", "SCI_NAMESPACE" }
 -- Load the shlibs from the 'lib/wxformbuilder' subdirectory.
 if ( macosx ) then
 	table.insert( package.linkoptions, "-Wl,-L../output/lib/wxformbuilder" )

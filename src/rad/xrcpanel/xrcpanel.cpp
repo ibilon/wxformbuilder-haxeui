@@ -42,8 +42,6 @@
 
 #include <wx/fdrepdlg.h>
 
-#include <wx/wxFlatNotebook/wxFlatNotebook.h>
-
 BEGIN_EVENT_TABLE( XrcPanel,  wxPanel )
 	EVT_FB_CODE_GENERATION( XrcPanel::OnCodeGeneration )
 	EVT_FB_PROJECT_REFRESH( XrcPanel::OnProjectRefresh )
@@ -81,7 +79,7 @@ XrcPanel::~XrcPanel()
 
 void XrcPanel::OnFind( wxFindDialogEvent& event )
 {
-	wxFlatNotebook* notebook = wxDynamicCast( this->GetParent(), wxFlatNotebook );
+	wxNotebook* notebook = wxDynamicCast( this->GetParent(), wxNotebook );
 	if ( NULL == notebook )
 	{
 		return;

@@ -37,12 +37,8 @@ Build Steps:
 		* Debug:
 			make
 
-Includes:
-	1. wxFlatNotebook
-		Used to give a good look and feel to the tabs in the wxFormBuilder user
-		interface.
-	
-	2. wxPropGrid
+Includes:	
+	1. wxPropGrid
 		Used to show all the properties of all the controls that can be placed
 		in wxFormBuilder.
 

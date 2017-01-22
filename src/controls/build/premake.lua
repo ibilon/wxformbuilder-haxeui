@@ -41,4 +41,3 @@ project.libdir = "../../../output"
 
 -- Add sdk projects here.
 dopackage( "propgrid" )
-dopackage( "wxFlatNotebook" )

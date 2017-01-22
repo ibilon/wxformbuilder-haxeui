@@ -67,7 +67,7 @@ else
 end
 
 -- Set the libraries it links to.
-package.links = { "wxFlatNotebook", "wxPropGrid", "plugin-interface", "TiCPP" }
+package.links = { "wxPropGrid", "plugin-interface", "TiCPP" }
 
 if ( linux ) then
 	addoption("rpath", "Specify the rpath for the compiled binary")

@@ -31,10 +31,6 @@
 #include "xrcconv.h"
 #include <ticpp.h>
 
-// wxFlatNotebook
-#include <wx/wxFlatNotebook/wxFlatNotebook.h>
-#include <wx/wxFlatNotebook/xh_fnb.h>
-
 // wxPropertyGrid
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/advprops.h>
@@ -42,6 +38,7 @@
 
 // wxWidgets
 #include <wx/xrc/xmlres.h>
+#include <wx/notebook.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +61,7 @@ protected:
 	// Enable folding for wxScintilla
 	//void OnMarginClick ( wxScintillaEvent& event );
 
-	void OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
+	void OnNotebookPageChanged( wxNotebookEvent& event )
 	{
 		// Only handle events from this book - prevents problems with nested books, because OnSelected is fired on an
 		// object and all of its parents
@@ -98,26 +95,18 @@ protected:
 		}
 
 		// Select the corresponding panel in the object tree
-		wxFlatNotebook* book = wxDynamicCast( m_window, wxFlatNotebook );
+		wxNotebook* book = wxDynamicCast( m_window, wxNotebook );
 		if ( NULL != book )
 		{
 			m_manager->SelectObject( book->GetPage( selPage ) );
 		}
 	}
 
-	void OnFlatNotebookPageClosing( wxFlatNotebookEvent& event )
-	{
-		wxMessageBox( wxT("wxFlatNotebook pages can normally be closed.\nHowever, it is difficult to design a page that has been closed, so this action has been vetoed."),
-						wxT("Page Close Vetoed!"), wxICON_INFORMATION, NULL );
-		event.Veto();
-	}
-
 	DECLARE_EVENT_TABLE()
 };
 
 BEGIN_EVENT_TABLE( ComponentEvtHandler, wxEvtHandler )
-	EVT_FLATNOTEBOOK_PAGE_CHANGED( -1, ComponentEvtHandler::OnFlatNotebookPageChanged )
-	EVT_FLATNOTEBOOK_PAGE_CLOSING( -1, ComponentEvtHandler::OnFlatNotebookPageClosing )
+	EVT_NOTEBOOK_PAGE_CHANGED( -1, ComponentEvtHandler::OnNotebookPageChanged )
 END_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -324,23 +313,21 @@ public:
 
 ///////////////////////////////////////////////////////////////////////////////
 
-class FlatNotebookComponent : public ComponentBase
+class NotebookComponent : public ComponentBase
 {
 public:
 	wxObject* Create(IObject *obj, wxObject *parent)
 	{
-		wxFlatNotebook* book = new wxFlatNotebook((wxWindow *)parent,-1,
+		wxNotebook* book = new wxNotebook((wxWindow *)parent,-1,
 			obj->GetPropertyAsPoint(_("pos")),
 			obj->GetPropertyAsSize(_("size")),
 			obj->GetPropertyAsInteger(_("style")) | obj->GetPropertyAsInteger(_("window_style")));
 
 		if ( obj->GetPropertyAsInteger( _("has_images") ) != 0 )
 		{
-			wxFlatNotebookImageList* images = new wxFlatNotebookImageList();
+			wxImageList* images = new wxImageList();
 			book->SetImageList( images );
 		}
-
-		book->SetCustomizeOptions( obj->GetPropertyAsInteger( _("customize_options") ) );
 
 		book->PushEventHandler( new ComponentEvtHandler( book, GetManager() ) );
 
@@ -349,33 +336,33 @@ public:
 
 	ticpp::Element* ExportToXrc(IObject *obj)
 	{
-		ObjectToXrcFilter xrc(obj, _("wxFlatNotebook"), obj->GetPropertyAsString(_("name")));
+		ObjectToXrcFilter xrc(obj, _("wxNotebook"), obj->GetPropertyAsString(_("name")));
 		xrc.AddWindowProperties();
 		return xrc.GetXrcObject();
 	}
 
 	ticpp::Element* ImportFromXrc( ticpp::Element* xrcObj )
 	{
-		XrcToXfbFilter filter(xrcObj, _("wxFlatNotebook"));
+		XrcToXfbFilter filter(xrcObj, _("wxNotebook"));
 		filter.AddWindowProperties();
 		return filter.GetXfbObject();
 	}
 };
 
-class FlatNotebookPageComponent : public ComponentBase
+class NotebookPageComponent : public ComponentBase
 {
 public:
 	void OnCreated( wxObject* wxobject, wxWindow* wxparent )
 	{
 		// Easy read-only property access
 		IObject* obj = GetManager()->GetIObject( wxobject );
-		wxFlatNotebook* book = wxDynamicCast( wxparent, wxFlatNotebook );
+		wxNotebook* book = wxDynamicCast( wxparent, wxNotebook );
 		wxWindow* page = wxDynamicCast( GetManager()->GetChild( wxobject, 0 ), wxWindow );
 
 		// Error checking
 		if ( !( obj && book && page ) )
 		{
-			wxLogError( _("FlatNotebookPageComponent is missing its haxeui-editor object(%i), its parent(%i), or its child(%i)"), obj, book, page );
+			wxLogError( _("NotebookPageComponent is missing its haxeui-editor object(%i), its parent(%i), or its child(%i)"), obj, book, page );
 			return;
 		}
 
@@ -392,7 +379,7 @@ public:
 		{
 			if ( !obj->GetPropertyAsString( _("bitmap") ).empty() )
 			{
-				wxFlatNotebookImageList* imageList = book->GetImageList();
+				wxImageList* imageList = book->GetImageList();
 				if ( parentObj->GetPropertyAsInteger( _("auto_scale_images") ) != 0 )
 				{
 					wxImage image = obj->GetPropertyAsBitmap( _("bitmap") ).ConvertToImage();
@@ -402,7 +389,7 @@ public:
 				{
 					imageList->Add( obj->GetPropertyAsBitmap( _("bitmap") ) );
 				}
-				book->AddPage( page, obj->GetPropertyAsString( _("label") ), false, imageList->GetCount() - 1 );
+				book->AddPage( page, obj->GetPropertyAsString( _("label") ), false, imageList->GetImageCount() - 1 );
 			}
 			else
 			{
@@ -437,7 +424,7 @@ public:
 			return;
 		}
 
-		wxFlatNotebook* book = wxDynamicCast( GetManager()->GetParent( wxobject ), wxFlatNotebook );
+		wxNotebook* book = wxDynamicCast( GetManager()->GetParent( wxobject ), wxNotebook );
 		if ( book )
 		{
 			for ( int i = 0; i < book->GetPageCount(); ++i )
@@ -484,12 +471,6 @@ public:
 
 BEGIN_LIBRARY()
 
-// Load additional XRC handlers
-// This code is actually in the entry point of the plugin - the function GetComponentLibrary()
-// I know this looks funky, but it is perfectly valid
-wxXmlResource *res = wxXmlResource::Get();
-res->AddHandler( new wxFlatNotebookXmlHandler );
-
 // wxPropertyGrid
 WINDOW_COMPONENT("wxPropertyGrid", PropertyGridComponent)
 MACRO(wxPG_AUTO_SORT)
@@ -515,34 +496,7 @@ MACRO(wxPGMAN_DEFAULT_STYLE)
 MACRO(wxPG_DESCRIPTION)
 MACRO(wxPG_TOOLBAR)
 
-// wxFlatNotebook
-WINDOW_COMPONENT("wxFlatNotebook",FlatNotebookComponent)
-ABSTRACT_COMPONENT("flatnotebookpage",FlatNotebookPageComponent)
-MACRO(wxFNB_VC71)
-MACRO(wxFNB_FANCY_TABS)
-MACRO(wxFNB_TABS_BORDER_SIMPLE)
-MACRO(wxFNB_NO_X_BUTTON)
-MACRO(wxFNB_NO_NAV_BUTTONS)
-MACRO(wxFNB_MOUSE_MIDDLE_CLOSES_TABS)
-MACRO(wxFNB_BOTTOM)
-MACRO(wxFNB_NODRAG)
-MACRO(wxFNB_VC8)
-MACRO(wxFNB_X_ON_TAB)
-MACRO(wxFNB_BACKGROUND_GRADIENT)
-MACRO(wxFNB_COLORFUL_TABS)
-MACRO(wxFNB_DCLICK_CLOSES_TABS)
-MACRO(wxFNB_SMART_TABS)
-MACRO(wxFNB_DROPDOWN_TABS_LIST)
-MACRO(wxFNB_ALLOW_FOREIGN_DND)
-MACRO(wxFNB_FF2)
-MACRO(wxFNB_CUSTOM_DLG)
-
-// wxFNB Customizatio Options
-MACRO(wxFNB_CUSTOM_TAB_LOOK)
-MACRO(wxFNB_CUSTOM_ORIENTATION)
-MACRO(wxFNB_CUSTOM_FOREIGN_DRAG)
-MACRO(wxFNB_CUSTOM_LOCAL_DRAG)
-MACRO(wxFNB_CUSTOM_CLOSE_BUTTON)
-MACRO(wxFNB_CUSTOM_ALL)
-
+// wxNotebook
+WINDOW_COMPONENT("wxNotebook", NotebookComponent)
+ABSTRACT_COMPONENT("notebookpage",NotebookPageComponent)
 END_LIBRARY()

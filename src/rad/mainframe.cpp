@@ -85,7 +85,7 @@
 #define ID_BORDER_RIGHT   130
 #define ID_BORDER_TOP     131
 #define ID_BORDER_BOTTOM  132
-#define ID_EDITOR_FNB	  133
+#define ID_EDITOR_NB	  133
 #define ID_MOVE_LEFT	  134
 #define ID_MOVE_RIGHT     135
 
@@ -272,14 +272,14 @@ m_findDialog( NULL )
 	// So splitter windows can be restored correctly
 	Connect( wxEVT_IDLE, wxIdleEventHandler( MainFrame::OnIdle ) );
 
-	// So we don't respond to a FlatNoteBookPageChanged event during construction
-	m_notebook->Connect( wxEVT_COMMAND_FLATNOTEBOOK_PAGE_CHANGED, wxFlatNotebookEventHandler( MainFrame::OnFlatNotebookPageChanged ), 0, this );
+	// So we don't respond to a NoteBookPageChanged event during construction
+	m_notebook->Connect( wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler( MainFrame::OnNotebookPageChanged ), 0, this );
 };
 
 
 MainFrame::~MainFrame()
 {
-	m_notebook->Disconnect( wxEVT_COMMAND_FLATNOTEBOOK_PAGE_CHANGED, wxFlatNotebookEventHandler( MainFrame::OnFlatNotebookPageChanged ), 0, this );
+	m_notebook->Disconnect( wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler( MainFrame::OnNotebookPageChanged ), 0, this );
 
 #ifdef __WXMAC__
     // work around problem on wxMac
@@ -1142,14 +1142,14 @@ bool MainFrame::SaveWarning()
 	return ( result != wxCANCEL );
 }
 
-void MainFrame::OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
+void MainFrame::OnNotebookPageChanged( wxNotebookEvent& event )
 {
 	UpdateFrame();
 
 	if ( m_autoSash )
 	{
 		m_page_selection = event.GetSelection();
-		Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > selection = %d"), m_page_selection);
+		Debug::Print(wxT("MainFrame::OnNotebookPageChanged > selection = %d"), m_page_selection);
 
 		wxSize panel_size;
 		int sash_pos;
@@ -1162,12 +1162,12 @@ void MainFrame::OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
 				panel_size = m_xrc->GetClientSize();
 				sash_pos = m_rightSplitter->GetSashPosition();
 
-				Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > XRC panel: width = %d sash pos = %d"), panel_size.GetWidth(), sash_pos);
+				Debug::Print(wxT("MainFrame::OnNotebookPageChanged > XRC panel: width = %d sash pos = %d"), panel_size.GetWidth(), sash_pos);
 
 				if(panel_size.GetWidth() > sash_pos)
 				{
 					// set the sash position
-					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > reset sash position"));
+					Debug::Print(wxT("MainFrame::OnNotebookPageChanged > reset sash position"));
 					m_rightSplitter->SetSashPosition(panel_size.GetWidth());
 				}
 			}
@@ -1181,7 +1181,7 @@ void MainFrame::OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
 				if(m_rightSplitter_sash_pos < sash_pos)
 				{
 					//restore the sash position
-					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > restore sash position"));
+					Debug::Print(wxT("MainFrame::OnNotebookPageChanged > restore sash position"));
 					m_rightSplitter->SetSashPosition(m_rightSplitter_sash_pos);
 				}
 				else
@@ -1318,10 +1318,9 @@ wxWindow * MainFrame::CreateDesignerWindow( wxWindow *parent )
 {
 	long nbStyle;
 	wxConfigBase* config = wxConfigBase::Get();
-	config->Read( wxT("/mainframe/editor/notebook_style"), &nbStyle, wxFNB_BOTTOM | wxFNB_NO_X_BUTTON | wxFNB_NO_NAV_BUTTONS | wxFNB_NODRAG  | wxFNB_FF2 | wxFNB_CUSTOM_DLG );
+	config->Read( wxT("/mainframe/editor/notebook_style"), &nbStyle, wxNB_BOTTOM);
 
-	m_notebook = new wxFlatNotebook( parent, ID_EDITOR_FNB, wxDefaultPosition, wxDefaultSize, FNB_STYLE_OVERRIDES( nbStyle ) );
-	m_notebook->SetCustomizeOptions( wxFNB_CUSTOM_TAB_LOOK | wxFNB_CUSTOM_ORIENTATION | wxFNB_CUSTOM_LOCAL_DRAG );
+	m_notebook = new wxNotebook( parent, ID_EDITOR_NB, wxDefaultPosition, wxDefaultSize, nbStyle);
 
 	// Set notebook icons
 	m_icons.Add( AppBitmaps::GetBitmap( wxT( "designer" ), 16 ) );

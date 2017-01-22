@@ -282,7 +282,7 @@ PObjectBase TemplateParser::GetWxParent()
 	candidates.push_back( m_obj->FindNearAncestor( wxT("container") ) );
 	candidates.push_back( m_obj->FindNearAncestor( wxT("notebook") ) );
 	candidates.push_back( m_obj->FindNearAncestor( wxT("splitter") ) );
-	candidates.push_back( m_obj->FindNearAncestor( wxT("flatnotebook") ) );
+	candidates.push_back( m_obj->FindNearAncestor( wxT("notebook") ) );
 	candidates.push_back( m_obj->FindNearAncestor( wxT("listbook") ) );
 	candidates.push_back( m_obj->FindNearAncestor( wxT("choicebook") ) );
 	candidates.push_back( m_obj->FindNearAncestor( wxT("auinotebook") ) );

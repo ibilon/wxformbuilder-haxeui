@@ -29,9 +29,9 @@
 #define __MAIN_FRAME__
 
 #include "wx/wx.h"
-#include <wx/wxFlatNotebook/wxFlatNotebook.h>
 #include "wx/splitter.h"
 #include <wx/fdrepdlg.h>
+#include <wx/notebook.h>
 
 class wxFBEvent;
 class wxFBObjectEvent;
@@ -68,8 +68,8 @@ class MainFrame : public wxFrame
   int m_rightSplitterWidth;
 
   //wxFrameManager m_mgr;
-  wxFlatNotebook *m_notebook;
-  wxFlatNotebookImageList m_icons;
+  wxNotebook *m_notebook;
+  wxImageList m_icons;
   wxFbPalette *m_palette;
   ObjectTree *m_objTree;
   ObjectInspector *m_objInsp;
@@ -138,7 +138,7 @@ class MainFrame : public wxFrame
   void OnChangeBorder(wxCommandEvent& e);
   void OnXrcPreview(wxCommandEvent& e);
   void OnGenInhertedClass(wxCommandEvent& e);
-  void OnFlatNotebookPageChanged( wxFlatNotebookEvent& event );
+  void OnNotebookPageChanged( wxNotebookEvent& event );
 
   void OnProjectLoaded( wxFBEvent& event );
   void OnProjectSaved( wxFBEvent& event );

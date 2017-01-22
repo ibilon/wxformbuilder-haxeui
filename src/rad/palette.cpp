@@ -45,7 +45,7 @@
 	#if wxCHECK_VERSION( 2, 8, 0 )
 		#define DRAG_OPTION 0
 	#else
-		#define DRAG_OPTION wxFNB_NODRAG
+		#define DRAG_OPTION wxNB_NODRAG
 	#endif
 #else
 	#define DRAG_OPTION 0
@@ -108,10 +108,9 @@ void wxFbPalette::Create()
 
 	long nbStyle;
 	wxConfigBase* config = wxConfigBase::Get();
-	config->Read( wxT( "/palette/notebook_style" ), &nbStyle, wxFNB_NO_X_BUTTON | wxFNB_NO_NAV_BUTTONS | DRAG_OPTION | wxFNB_DROPDOWN_TABS_LIST  | wxFNB_VC8 | wxFNB_CUSTOM_DLG );
+	config->Read( wxT( "/palette/notebook_style" ), &nbStyle, DRAG_OPTION);
 
-	m_notebook = new wxFlatNotebook( this, -1, wxDefaultPosition, wxDefaultSize, FNB_STYLE_OVERRIDES( nbStyle ) );
-	m_notebook->SetCustomizeOptions( wxFNB_CUSTOM_TAB_LOOK | wxFNB_CUSTOM_ORIENTATION | wxFNB_CUSTOM_LOCAL_DRAG );
+	m_notebook = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, nbStyle);
 
 	unsigned int pkg_count = AppData()->GetPackageCount();
 

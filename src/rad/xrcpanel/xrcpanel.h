@@ -29,6 +29,7 @@
 #define __XRC_PANEL__
 
 #include <wx/panel.h>
+#include <wx/notebook.h>
 
 #include "utils/wxfbdefs.h"
 
@@ -37,9 +38,6 @@ class CodeEditor;
 class wxFBEvent;
 class wxFBPropertyEvent;
 class wxFBObjectEvent;
-
-//class wxScintilla;
-
 class wxFindDialogEvent;
 
 class XrcPanel : public wxPanel

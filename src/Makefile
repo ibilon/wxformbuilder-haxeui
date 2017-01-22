@@ -10,12 +10,12 @@ ifeq ($(CONFIG),Release)
   LIBDIR := ..
   OBJDIR := .objsu
   OUTDIR := ../output/bin
-  CPPFLAGS := -MMD -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
+  CPPFLAGS := -MMD -D "WXUSINGDLL_NB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -O3 -Wall -fno-strict-aliasing `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS) -std=c++11
-  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --libs` -L"../output/lib/haxeui-editor" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lticpp -lfbPluginInterface
-  LDDEPS := ../output/lib/haxeui-editor/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../sdk/lib/libticpp.a ../sdk/lib/libfbPluginInterface.a
-  RESFLAGS := -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
+  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --libs` -L"../output/lib/haxeui-editor" -L"../sdk/lib" -lwx_gtk2u_propgrid-2.8_wxfb -lticpp -lfbPluginInterface
+  LDDEPS := ../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../sdk/lib/libticpp.a ../sdk/lib/libfbPluginInterface.a
+  RESFLAGS := -D "WXUSINGDLL_NB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   TARGET := haxeui-editor
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
 endif
@@ -25,12 +25,12 @@ ifeq ($(CONFIG),Debug)
   LIBDIR := ..
   OBJDIR := .objsud
   OUTDIR := ../output/bin
-  CPPFLAGS := -MMD -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
+  CPPFLAGS := -MMD -D "WXUSINGDLL_NB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -Wall -O0 `wx-config --debug=no --cflags`
   CXXFLAGS := $(CFLAGS) -std=c++11
-  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --debug=no --libs` -L"../output/lib/haxeui-editor" -L"../sdk/lib" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -lticppd -lfbPluginInterfaced
-  LDDEPS := ../output/lib/haxeui-editor/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../sdk/lib/libticppd.a ../sdk/lib/libfbPluginInterfaced.a
-  RESFLAGS := -D "WXUSINGDLL_FNB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
+  LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --debug=no --libs` -L"../output/lib/haxeui-editor" -L"../sdk/lib" -lwx_gtk2u_propgrid-2.8_wxfb -lticppd -lfbPluginInterfaced
+  LDDEPS := ../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../sdk/lib/libticppd.a ../sdk/lib/libfbPluginInterfaced.a
+  RESFLAGS := -D "WXUSINGDLL_NB" -D "TIXML_USE_TICPP" -D "NO_GCC_PRAGMA" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
   TARGET := haxeui-editord
   BLDCMD = $(CXX) -o $(OUTDIR)/$(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(TARGET_ARCH)
 endif

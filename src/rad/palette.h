@@ -29,11 +29,11 @@
 #define __PALETTE__
 
 #include <wx/wx.h>
-#include <wx/wxFlatNotebook/wxFlatNotebook.h>
 #include <wx/spinbutt.h>
 #include <vector>
 #include <utils/wxfbdefs.h>
 #include <model/database.h>
+#include <wx/notebook.h>
 
 typedef std::vector<wxToolBar*> ToolbarVector;
 
@@ -41,10 +41,10 @@ class wxFbPalette : public wxPanel
 {
  private:
   ToolbarVector m_tv;
-  wxFlatNotebook *m_notebook;
+  wxNotebook *m_notebook;
   static wxWindowID nextId;
   std::vector<int> m_posVector;
-  wxFlatNotebookImageList m_icons;
+  wxImageList m_icons;
 
 
   void PopulateToolbar(PObjectPackage pkg, wxToolBar *toolbar);
