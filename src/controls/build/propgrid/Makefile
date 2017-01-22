@@ -12,7 +12,7 @@ ifeq ($(CONFIG),Release)
   OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../include"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -O3 -Wall -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared -s `wx-config --libs`
   LDDEPS :=
   RESFLAGS := -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../include"
@@ -27,7 +27,7 @@ ifeq ($(CONFIG),Debug)
   OUTDIR := ../../../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../include"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -g -Wall -fPIC -O0 `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared `wx-config --debug=no --libs`
   LDDEPS :=
   RESFLAGS := -D "WXMAKINGDLL_PROPGRID" -D "MONOLITHIC" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../include"

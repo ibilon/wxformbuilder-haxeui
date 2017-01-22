@@ -46,7 +46,7 @@ package.files = { matchrecursive( "*.cpp", "*.hpp", "*.h", "*.cc", "*.hh", "*.rc
 -- Set the files to exclude.
 package.excludes = { matchrecursive( "controls/*.cpp", "controls/*.h" ) }
 -- Set the include paths.
-package.includepaths = { "controls/include", "boost", "../src", "../sdk/tinyxml", "../sdk/plugin_interface" }
+package.includepaths = { "controls/include", "../src", "../sdk/tinyxml", "../sdk/plugin_interface" }
 if ( windows ) then
 	package.libpaths = { "../output", "../sdk/lib" }
 else

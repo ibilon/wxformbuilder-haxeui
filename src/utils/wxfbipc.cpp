@@ -94,7 +94,7 @@ bool wxFBIPC::VerifySingleInstance( const wxString& file, bool switchTo )
 		}
 	}
 
-    std::auto_ptr< wxSingleInstanceChecker > checker;
+    std::shared_ptr< wxSingleInstanceChecker > checker;
     {
         // Suspend logging, because error messages here are not useful
         #ifndef __WXFB_DEBUG__
@@ -137,10 +137,10 @@ bool wxFBIPC::VerifySingleInstance( const wxString& file, bool switchTo )
 		}
 
 		// Create the client
-		std::auto_ptr< AppClient > client( new AppClient );
+		std::shared_ptr< AppClient > client( new AppClient );
 
 		// Create the connection
-		std::auto_ptr< wxConnectionBase > connection;
+		std::shared_ptr< wxConnectionBase > connection;
 		#ifdef __WXMSW__
 			connection.reset( client->MakeConnection( wxT("localhost"), name, name ) );
 		#else
@@ -186,7 +186,7 @@ bool wxFBIPC::CreateServer( const wxString& name )
 	wxLogNull stopLogging;
 	#endif
 
-	std::auto_ptr< AppServer > server( new AppServer( name ) );
+	std::shared_ptr< AppServer > server( new AppServer( name ) );
 
 	#ifdef __WXMSW__
 		if ( server->Create( name ) )

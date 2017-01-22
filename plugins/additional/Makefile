@@ -12,7 +12,7 @@ ifeq ($(CONFIG),Release)
   OUTDIR := ../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -O3 -Wall -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared -s `wx-config --libs std richtext` -L../../sdk/lib -lfbPluginInterface -L../../sdk/lib -lticpp
   LDDEPS := ../../sdk/lib/libfbPluginInterface.a ../../sdk/lib/libticpp.a
   RESFLAGS := -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
@@ -27,7 +27,7 @@ ifeq ($(CONFIG),Debug)
   OUTDIR := ../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -g -Wall -fPIC -O0 `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared `wx-config --debug=no --libs std richtext` -L../../sdk/lib -lfbPluginInterfaced -L../../sdk/lib -lticppd
   LDDEPS := ../../sdk/lib/libfbPluginInterfaced.a ../../sdk/lib/libticppd.a
   RESFLAGS := -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"

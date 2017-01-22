@@ -9,6 +9,8 @@ endif
 
 export CONFIG
 
+CXXFLAGS := -std=c++11
+
 .PHONY: all clean wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
 all: wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor

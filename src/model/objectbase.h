@@ -277,7 +277,7 @@ namespace ticpp
 	class Element;
 }
 
-class ObjectBase : public IObject, public boost::enable_shared_from_this<ObjectBase>
+class ObjectBase : public IObject, public std::enable_shared_from_this<ObjectBase>
 {
 	friend class wxFBDataObject;
 private:
@@ -303,7 +303,7 @@ protected:
 	void SerializeObject( ticpp::Element* serializedElement );
 
 	// devuelve el puntero "this"
-	PObjectBase GetThis() { return shared_from_this(); }
+	PObjectBase GetThis() { return this->shared_from_this(); }
 
 public:
 

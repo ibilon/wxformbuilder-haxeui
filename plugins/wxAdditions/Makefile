@@ -12,7 +12,7 @@ ifeq ($(CONFIG),Release)
   OUTDIR := ../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../src/controls/include" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -O3 -Wall -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared -s -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --libs` -L"../../output/lib/haxeui-editor" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -L../../sdk/lib -lfbPluginInterface -L../../sdk/lib -lticpp
   LDDEPS := ../../output/lib/haxeui-editor/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../../sdk/lib/libfbPluginInterface.a ../../sdk/lib/libticpp.a
   RESFLAGS := -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../../src/controls/include" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
@@ -27,7 +27,7 @@ ifeq ($(CONFIG),Debug)
   OUTDIR := ../../output/lib/haxeui-editor
   CPPFLAGS := -MMD -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../src/controls/include" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -fPIC -g -Wall -fPIC -O0 `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -shared -Wl,-rpath,/usr/lib/haxeui-editor `wx-config --debug=no --libs` -L"../../output/lib/haxeui-editor" -lwx_gtk2u_flatnotebook-2.8_wxfb -lwx_gtk2u_propgrid-2.8_wxfb -L../../sdk/lib -lfbPluginInterfaced -L../../sdk/lib -lticppd
   LDDEPS := ../../output/lib/haxeui-editor/libwx_gtk2u_flatnotebook-2.8_wxfb.so ../../output/lib/haxeui-editor/libwx_gtk2u_propgrid-2.8_wxfb.so ../../sdk/lib/libfbPluginInterfaced.a ../../sdk/lib/libticppd.a
   RESFLAGS := -D "BUILD_DLL" -D "TIXML_USE_TICPP" -D "SCI_NAMESPACE" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../../src/controls/include" -I "../../sdk/tinyxml" -I "../../sdk/plugin_interface"

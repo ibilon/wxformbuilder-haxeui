@@ -76,7 +76,7 @@ void VObjEvtHandler::OnLeftClick(wxMouseEvent &event)
 
 void VObjEvtHandler::OnPaint(wxPaintEvent &event)
 {
-	PObjectBase wo = boost::shared_dynamic_cast<ObjectBase>(m_object.lock());
+	PObjectBase wo = std::dynamic_pointer_cast<ObjectBase>(m_object.lock());
 	if (wo->IsContainer())
 	{
 		wxWindow *aux = m_window;

@@ -12,7 +12,7 @@ ifeq ($(CONFIG),Release)
   OUTDIR := ../lib
   CPPFLAGS := -MMD -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../tinyxml"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -O3 -Wall -fPIC -fno-strict-aliasing `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) -s `wx-config --libs` -lticpp
   LDDEPS := ../lib/libticpp.a
   RESFLAGS := -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -I "../tinyxml"
@@ -27,7 +27,7 @@ ifeq ($(CONFIG),Debug)
   OUTDIR := ../lib
   CPPFLAGS := -MMD -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../tinyxml"
   CFLAGS += $(CPPFLAGS) $(TARGET_ARCH) -g -Wall -fPIC -O0 `wx-config --debug=no --cflags`
-  CXXFLAGS := $(CFLAGS)
+  CXXFLAGS := $(CFLAGS) -std=c++11
   LDFLAGS += -L$(BINDIR) -L$(LIBDIR) `wx-config --debug=no --libs` -lticppd
   LDDEPS := ../lib/libticppd.a
   RESFLAGS := -D "TIXML_USE_TICPP" -D "WXUSINGDLL" -D "UNICODE" -D "_UNICODE" -D "__WX__" -D "NDEBUG" -D "__WXFB_DEBUG__" -I "../tinyxml"

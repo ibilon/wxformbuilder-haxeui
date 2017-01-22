@@ -29,10 +29,10 @@
 #define __COMMAND_PROC__
 
 #include <stack>
-#include <boost/smart_ptr.hpp>
+#include <memory>
 
 class Command;
-typedef boost::shared_ptr<Command> PCommand;
+typedef std::shared_ptr<Command> PCommand;
 
 class CommandProcessor
 {
