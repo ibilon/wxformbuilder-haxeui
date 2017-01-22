@@ -34,16 +34,13 @@ class MainFrame;
 class MyApp : public wxApp
 {
 private:
-  wxLog * m_old_log;
-  wxLogWindow * m_log;
+  wxLog* m_old_log;
+  wxLogWindow* m_log;
 
-  MainFrame *m_frame;
+  MainFrame* m_frame;
   
 public:
   bool OnInit();
-  #if wxUSE_ON_FATAL_EXCEPTION && wxUSE_STACKWALKER
-  void OnFatalException();
-  #endif
   int OnRun();
   int OnExit();
   ~MyApp();

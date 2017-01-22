@@ -37,7 +37,6 @@ endif
 
 OBJECTS := \
 	$(OBJDIR)/maingui.o \
-	$(OBJDIR)/splashscreen.o \
 	$(OBJDIR)/database.o \
 	$(OBJDIR)/xrcfilter.o \
 	$(OBJDIR)/objectbase.o \
@@ -120,11 +119,6 @@ else
 endif
 
 $(OBJDIR)/maingui.o: maingui.cpp
-	-@$(CMD_MKOBJDIR)
-	@echo $(notdir $<)
-	@$(CXX) $(CXXFLAGS) -o $@ -c $<
-
-$(OBJDIR)/splashscreen.o: splashscreen.cpp
 	-@$(CMD_MKOBJDIR)
 	@echo $(notdir $<)
 	@$(CXX) $(CXXFLAGS) -o $@ -c $<
