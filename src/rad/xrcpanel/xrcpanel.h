@@ -38,7 +38,7 @@ class wxFBEvent;
 class wxFBPropertyEvent;
 class wxFBObjectEvent;
 
-class wxScintilla;
+//class wxScintilla;
 
 class wxFindDialogEvent;
 
@@ -48,7 +48,7 @@ private:
 	CodeEditor* m_xrcPanel;
 	PTCCodeWriter m_cw;
 
-	void InitStyledTextCtrl( wxScintilla* stc );
+	//void InitStyledTextCtrl( wxScintilla* stc );
 
 public:
 	XrcPanel( wxWindow *parent, int id );

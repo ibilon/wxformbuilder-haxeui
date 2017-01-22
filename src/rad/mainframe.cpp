@@ -31,7 +31,6 @@
 #include "utils/typeconv.h"
 #include "rad/title.h"
 #include "rad/bitmaps.h"
-#include "rad/cpppanel/cpppanel.h"
 #include "rad/xrcpanel/xrcpanel.h"
 #include "rad/geninheritclass/geninhertclass.h"
 #include "inspector/objinspect.h"
@@ -51,7 +50,7 @@
 #include <rad/appdata.h>
 #include "model/objectbase.h"
 
-#include <wx/wxScintilla/wxscintilla.h>
+//#include <wx/wxScintilla/wxscintilla.h>
 
 #define ID_SAVE_PRJ      102
 #define ID_OPEN_PRJ      103
@@ -197,12 +196,11 @@ BEGIN_EVENT_TABLE( FocusKillerEvtHandler, wxEvtHandler )
 	EVT_MENU( wxID_ANY, FocusKillerEvtHandler::OnMenuEvent )
 END_EVENT_TABLE()
 
-MainFrame::MainFrame( wxWindow *parent, int id, int style, wxPoint pos, wxSize size )
+MainFrame::MainFrame( wxWindow *parent, int id, wxPoint pos, wxSize size )
 :
 wxFrame( parent, id, wxEmptyString, pos, size, wxDEFAULT_FRAME_STYLE ),
 m_leftSplitterWidth( 300 ),
 m_rightSplitterWidth( -300 ),
-m_style( style ),
 m_page_selection( 0 ),
 m_rightSplitter_sash_pos( 300 ),
 m_autoSash( true ),
@@ -242,101 +240,27 @@ m_findDialog( NULL )
 	// Create the gui
 	/////////////////////////////////////////////////////////////////////////////
 
-	/*
-	//  --- wxAUI version --
-	wxWindow *objectTree      = CreateObjectTree(this);
-	wxWindow *objectInspector = CreateObjectInspector(this);
-	wxWindow *palette         = CreateComponentPalette(this);
-	wxWindow *designer        = CreateDesignerWindow(this);
-
-
-	m_mgr.SetFrame(this);
-	m_mgr.AddPane(objectTree,
-	             wxPaneInfo().Name(wxT("tree")).
-	                          Caption(wxT("Object Tree")).
-	                           Left().Layer(1).
-	                           BestSize(wxSize(300,400)).
-	                           CloseButton(false));
-	m_mgr.AddPane(objectInspector,
-	             wxPaneInfo().Name(wxT("inspector")).
-	                          Caption(wxT("Object Properties")).
-	                           Right().BestSize(wxSize(300,400)).
-	                           CloseButton(false));
-
-	m_mgr.AddPane(designer,
-	             wxPaneInfo().Name(wxT("editor")).
-	                          Caption(wxT("Editor")).
-	                           Center().
-	                           CloseButton(false));
-
-	m_mgr.AddPane(palette,
-	             wxPaneInfo().Name(wxT("palette")).
-	             Caption(wxT("Component Palette")).
-	             Top().
-	             RightDockable(false).
-	             LeftDockable(false).
-	             CloseButton(false));
-
-	m_mgr.Update();*/
-
 	RestorePosition( wxT( "mainframe" ) );
 	Layout();
 
 	// Init. m_cpp and m_xrc first
-	m_cpp = NULL;
 	m_xrc = NULL;
 
-	switch ( style )
-	{
+	/*  //  --- Wide style Gui --
+		//
+		//  +------++-----------------------+
+		//  | Obj. ||  Palette              |
+		//  | Tree ++-------------++--------+
+		//  |      ||  Editor     || Obj.   |
+		//  |      ||             || Insp.  |
+		//  |      ||             ||        |
+		//  |      ||             ||        |
+		//  |      ||             ||        |
+		//  |      ||             ||        |
+		//  |      ||             ||        |
+		//  +------++-------------++--------+ 	*/
 
-		case wxFB_DOCKABLE_GUI:
-			// TO-DO
-			CreateWideGui();
-
-			break;
-
-		case wxFB_CLASSIC_GUI:
-
-			/*  //  --- Classic style Gui --
-			     //
-			     //  +------++-----------------------+
-			     //  | Obj. ||  Palette              |
-			     //  | Tree ++-----------------------+
-			     //  |      ||  Editor               |
-			     //  |______||                       |
-			     //  |------||                       |
-			     //  | Obj. ||                       |
-			     //  | Insp.||                       |
-			     //  |      ||                       |
-			     //  |      ||                       |
-			     //  +------++-----------------------+ 	*/
-
-			CreateClassicGui();
-
-			break;
-
-		case wxFB_DEFAULT_GUI:
-
-		case wxFB_WIDE_GUI:
-
-		default:
-
-			/*  //  --- Wide style Gui --
-			      //
-			      //  +------++-----------------------+
-			      //  | Obj. ||  Palette              |
-			      //  | Tree ++-------------++--------+
-			      //  |      ||  Editor     || Obj.   |
-			      //  |      ||             || Insp.  |
-			      //  |      ||             ||        |
-			      //  |      ||             ||        |
-			      //  |      ||             ||        |
-			      //  |      ||             ||        |
-			      //  |      ||             ||        |
-			      //  +------++-------------++--------+ 	*/
-
-			CreateWideGui();
-	}
+	CreateWideGui();
 
 	AppData()->AddHandler( this->GetEventHandler() );
 
@@ -362,8 +286,6 @@ MainFrame::~MainFrame()
     m_rightSplitter->GetWindow1()->GetSizer()->Detach(m_notebook);
     m_notebook->Destroy();
 #endif
-
-	/*m_mgr.UnInit();*/
 
 	// the focus killer event handler
 	RemoveEventHandler( m_focusKillEvtHandler );
@@ -449,26 +371,8 @@ void MainFrame::SavePosition( const wxString &name )
 
 	if ( m_rightSplitter )
 	{
-		switch ( m_style )
-		{
-
-			case wxFB_WIDE_GUI:
-				{
-					int rightSash = -1 * ( m_rightSplitter->GetSize().GetWidth() - m_rightSplitter->GetSashPosition() );
-					config->Write( wxT( "RightSplitterWidth" ), rightSash );
-					break;
-				}
-
-			case wxFB_CLASSIC_GUI:
-				{
-					int rightSash = -1 * ( m_rightSplitter->GetSize().GetHeight() - m_rightSplitter->GetSashPosition() );
-					config->Write( wxT( "RightSplitterWidth" ), rightSash );
-					break;
-				}
-
-			default:
-				break;
-		}
+		int rightSash = -1 * ( m_rightSplitter->GetSize().GetWidth() - m_rightSplitter->GetSashPosition() );
+		config->Write( wxT( "RightSplitterWidth" ), rightSash );
 	}
 
 	config->SetPath( wxT( ".." ) );
@@ -699,41 +603,35 @@ void MainFrame::OnObjectSelected( wxFBObjectEvent& event )
 		wxSize      panel_size;
 		int         sash_pos;
 
-		if ( m_style != wxFB_CLASSIC_GUI )
+		switch(m_page_selection)
 		{
-			switch(m_page_selection)
+		case 1: // XRC panel
+			break;
+
+		default:
+			if ( m_visualEdit != NULL )
 			{
-			case 1: // CPP panel
-				break;
 
-			case 2: // XRC panel
-			   break;
-
-			default:
-				if ( m_visualEdit != NULL )
+				// If selected object is not a Frame or a Panel or a dialog, we won't
+				// adjust the sash position
+				if ( obj->GetObjectTypeName() == wxT("form") )
 				{
+					sash_pos = m_rightSplitter->GetSashPosition();
+					panel_size = m_visualEdit->GetVirtualSize();
 
-					// If selected object is not a Frame or a Panel or a dialog, we won't
-					// adjust the sash position
-					if ( obj->GetObjectTypeName() == wxT("form") )
+					Debug::Print(wxT("MainFrame::OnObjectSelected > sash pos = %d"), sash_pos);
+					Debug::Print(wxT("MainFrame::OnObjectSelected > virtual width = %d"), panel_size.GetWidth());
+
+					if ( panel_size.GetWidth() > sash_pos )
 					{
-						sash_pos = m_rightSplitter->GetSashPosition();
-						panel_size = m_visualEdit->GetVirtualSize();
-
-						Debug::Print(wxT("MainFrame::OnObjectSelected > sash pos = %d"), sash_pos);
-						Debug::Print(wxT("MainFrame::OnObjectSelected > virtual width = %d"), panel_size.GetWidth());
-
-						if ( panel_size.GetWidth() > sash_pos )
-						{
-							//set the sash position
-							Debug::Print(wxT("MainFrame::OnObjectSelected > set sash position"));
-							m_rightSplitter_sash_pos = panel_size.GetWidth();
-							m_rightSplitter->SetSashPosition(m_rightSplitter_sash_pos);
-						}
+						//set the sash position
+						Debug::Print(wxT("MainFrame::OnObjectSelected > set sash position"));
+						m_rightSplitter_sash_pos = panel_size.GetWidth();
+						m_rightSplitter->SetSashPosition(m_rightSplitter_sash_pos);
 					}
 				}
-				break;
 			}
+			break;
 		}
     }
 
@@ -1039,30 +937,15 @@ void MainFrame::InsertRecentProject( const wxString &file )
 }
 
 void MainFrame::OnCopy( wxCommandEvent &)
-
 {
-	wxWindow *focusedWindow = wxWindow::FindFocus();
-
-	if ( focusedWindow != NULL && focusedWindow->IsKindOf( CLASSINFO( wxScintilla ) ) )
-		( ( wxScintilla* )focusedWindow )->Copy();
-	else
-	{
-		AppData()->CopyObject( AppData()->GetSelectedObject() );
-		UpdateFrame();
-	}
+	AppData()->CopyObject( AppData()->GetSelectedObject() );
+	UpdateFrame();
 }
 
 void MainFrame::OnCut ( wxCommandEvent &)
 {
-	wxWindow *focusedWindow = wxWindow::FindFocus();
-
-	if ( focusedWindow != NULL && focusedWindow->IsKindOf( CLASSINFO( wxScintilla ) ) )
-		( ( wxScintilla* )focusedWindow )->Cut();
-	else
-	{
-		AppData()->CutObject( AppData()->GetSelectedObject() );
-		UpdateFrame();
-	}
+	AppData()->CutObject( AppData()->GetSelectedObject() );
+	UpdateFrame();
 }
 
 void MainFrame::OnDelete ( wxCommandEvent &)
@@ -1073,15 +956,8 @@ void MainFrame::OnDelete ( wxCommandEvent &)
 
 void MainFrame::OnPaste ( wxCommandEvent &)
 {
-	wxWindow *focusedWindow = wxWindow::FindFocus();
-
-	if ( focusedWindow != NULL && focusedWindow->IsKindOf( CLASSINFO( wxScintilla ) ) )
-		( ( wxScintilla* )focusedWindow )->Paste();
-	else
-	{
-		AppData()->PasteObject( AppData()->GetSelectedObject() );
-		UpdateFrame();
-	}
+	AppData()->PasteObject( AppData()->GetSelectedObject() );
+	UpdateFrame();
 }
 
 void MainFrame::OnClipboardCopy(wxCommandEvent& )
@@ -1202,13 +1078,6 @@ void MainFrame::OnChangeBorder( wxCommandEvent& e )
 void MainFrame::OnXrcPreview( wxCommandEvent& WXUNUSED( e ) )
 {
 	AppData()->ShowXrcPreview();
-
-	/*wxPaneInfoArray& all_panes = m_mgr.GetAllPanes();
-	for ( int i = 0, count = all_panes.GetCount(); i < count; ++i )
-	{
-		wxPaneInfo info = all_panes.Item( i );
-	}*/
-
 }
 
 void MainFrame::OnGenInhertedClass( wxCommandEvent& WXUNUSED( e ) )
@@ -1285,63 +1154,43 @@ void MainFrame::OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
 		wxSize panel_size;
 		int sash_pos;
 
-		if(m_style != wxFB_CLASSIC_GUI)
+		switch( m_page_selection )
 		{
-			switch( m_page_selection )
+		case 1: // XRC panel
+			if((m_xrc != NULL) && (m_rightSplitter != NULL))
 			{
-			case 1: // CPP panel
-				if( (m_cpp != NULL) && (m_rightSplitter != NULL) )
+				panel_size = m_xrc->GetClientSize();
+				sash_pos = m_rightSplitter->GetSashPosition();
+
+				Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > XRC panel: width = %d sash pos = %d"), panel_size.GetWidth(), sash_pos);
+
+				if(panel_size.GetWidth() > sash_pos)
 				{
-					panel_size = m_cpp->GetClientSize();
-					sash_pos = m_rightSplitter->GetSashPosition();
-
-					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > CPP panel: width = %d sash pos = %d"), panel_size.GetWidth(), sash_pos);
-
-					if(panel_size.GetWidth() > sash_pos)
-					{
-						// set the sash position
-						Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > reset sash position"));
-						m_rightSplitter->SetSashPosition(panel_size.GetWidth());
-					}
+					// set the sash position
+					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > reset sash position"));
+					m_rightSplitter->SetSashPosition(panel_size.GetWidth());
 				}
-				break;
-
-			case 2: // XRC panel
-				if((m_xrc != NULL) && (m_rightSplitter != NULL))
-				{
-					panel_size = m_xrc->GetClientSize();
-					sash_pos = m_rightSplitter->GetSashPosition();
-
-					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > XRC panel: width = %d sash pos = %d"), panel_size.GetWidth(), sash_pos);
-
-					if(panel_size.GetWidth() > sash_pos)
-					{
-						// set the sash position
-						Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > reset sash position"));
-						m_rightSplitter->SetSashPosition(panel_size.GetWidth());
-					}
-				}
-				break;
-
-			default:
-				if(m_visualEdit != NULL)
-				{
-					sash_pos = m_rightSplitter->GetSashPosition();
-
-					if(m_rightSplitter_sash_pos < sash_pos)
-					{
-						//restore the sash position
-						Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > restore sash position"));
-						m_rightSplitter->SetSashPosition(m_rightSplitter_sash_pos);
-					}
-					else
-					{
-						// update position
-						m_rightSplitter_sash_pos = sash_pos;
-					}
-				}
-				break;
 			}
+			break;
+
+		default:
+			if(m_visualEdit != NULL)
+			{
+				sash_pos = m_rightSplitter->GetSashPosition();
+
+				if(m_rightSplitter_sash_pos < sash_pos)
+				{
+					//restore the sash position
+					Debug::Print(wxT("MainFrame::OnFlatNotebookPageChanged > restore sash position"));
+					m_rightSplitter->SetSashPosition(m_rightSplitter_sash_pos);
+				}
+				else
+				{
+					// update position
+					m_rightSplitter_sash_pos = sash_pos;
+				}
+			}
+			break;
 		}
 	}
 
@@ -1385,10 +1234,6 @@ wxMenuBar * MainFrame::CreateFBMenuBar()
 	menuFile->Append( ID_SAVE_PRJ,          wxT( "&Save\tCtrl+S" ), wxT( "Save current project" ) );
 	menuFile->Append( ID_SAVE_AS_PRJ, wxT( "Save &As...\tCtrl-Shift+S" ), wxT( "Save current project as..." ) );
 	menuFile->AppendSeparator();
-	menuFile->Append( ID_IMPORT_XRC, wxT( "&Import XRC..." ), wxT( "Import XRC file" ) );
-	menuFile->AppendSeparator();
-	menuFile->Append( ID_GENERATE_CODE, wxT( "&Generate Code\tF8" ), wxT( "Generate Code" ) );
-	menuFile->AppendSeparator();
 	menuFile->Append( wxID_EXIT, wxT( "E&xit\tAlt-F4" ), wxT( "Quit wxFormBuilder" ) );
 
 	wxMenu *menuEdit = new wxMenu;
@@ -1419,12 +1264,6 @@ wxMenuBar * MainFrame::CreateFBMenuBar()
 	menuEdit->Append( ID_ALIGN_CENTER_V, wxT( "&Align Center &Vertical\tAlt+Shift+V" ),   wxT( "Align item to the center vertically" ) );
 	menuEdit->Append( ID_ALIGN_BOTTOM,   wxT( "&Align &Bottom\tAlt+Shift+Down" ),         wxT( "Align item to the bottom" ) );
 
-	wxMenu *menuView = new wxMenu;
-	menuView->Append( ID_PREVIEW_XRC, wxT( "&XRC Window\tF5" ), wxT( "Show a preview of the XRC window" ) );
-
-	wxMenu *menuTools = new wxMenu;
-	menuTools->Append( ID_GEN_INHERIT_CLS, wxT( "&Generate Inherited Class\tF6" ), wxT( "Creates the needed files and class for proper inheritance of your designed GUI" ) );
-
 	wxMenu *menuHelp = new wxMenu;
 	menuHelp->Append( wxID_ABOUT, wxT( "&About...\tF1" ), wxT( "Show about dialog" ) );
 
@@ -1433,8 +1272,6 @@ wxMenuBar * MainFrame::CreateFBMenuBar()
 	wxMenuBar *menuBar = new wxMenuBar();
 	menuBar->Append( menuFile, wxT( "&File" ) );
 	menuBar->Append( menuEdit, wxT( "&Edit" ) );
-	menuBar->Append( menuView, wxT( "&View" ) );
-	menuBar->Append( menuTools, wxT( "&Tools" ) );
 	menuBar->Append( menuHelp, wxT( "&Help" ) );
 
 	return menuBar;
@@ -1455,8 +1292,6 @@ wxToolBar * MainFrame::CreateFBToolBar()
 	toolbar->AddTool( ID_COPY, wxT( "Copy" ), AppBitmaps::GetBitmap( wxT( "copy" ), TOOL_SIZE ), wxNullBitmap, wxITEM_NORMAL, wxT( "Copy (Ctrl+C)" ), wxT( "Copy the selected object to the clipboard." ) );
 	toolbar->AddTool( ID_PASTE, wxT( "Paste" ), AppBitmaps::GetBitmap( wxT( "paste" ), TOOL_SIZE ), wxNullBitmap, wxITEM_NORMAL, wxT( "Paste (Ctrl+V)" ), wxT( "Insert an object from the clipboard." ) );
 	toolbar->AddTool( ID_DELETE, wxT( "Delete" ), AppBitmaps::GetBitmap( wxT( "delete" ), TOOL_SIZE ), wxNullBitmap, wxITEM_NORMAL, wxT( "Delete (Ctrl+D)" ), wxT( "Remove the selected object." ) );
-	toolbar->AddSeparator();
-	toolbar->AddTool( ID_GENERATE_CODE, wxT( "Generate Code" ), AppBitmaps::GetBitmap( wxT( "generate" ), TOOL_SIZE ), wxNullBitmap, wxITEM_NORMAL, wxT( "Generate Code (F8)" ), wxT( "Create code from the current project." ) );
 	toolbar->AddSeparator();
 	toolbar->AddTool( ID_ALIGN_LEFT, wxT( "" ), AppBitmaps::GetBitmap( wxT( "lalign" ), TOOL_SIZE ), wxNullBitmap, wxITEM_CHECK, wxT( "Align Left" ), wxT( "The item will be aligned to the left of the space alotted to it by the sizer." ) );
 	toolbar->AddTool( ID_ALIGN_CENTER_H, wxT( "" ), AppBitmaps::GetBitmap( wxT( "chalign" ), TOOL_SIZE ), wxNullBitmap, wxITEM_CHECK, wxT( "Align Center Horizontally" ), wxT( "The item will be centered horizontally in the space alotted to it by the sizer." ) );
@@ -1499,9 +1334,6 @@ wxWindow * MainFrame::CreateDesignerWindow( wxWindow *parent )
 
 	m_notebook->AddPage( m_visualEdit, wxT( "Designer" ), false, 0 );
 
-	m_cpp = new CppPanel( m_notebook, -1 );
-	m_notebook->AddPage( m_cpp, wxT( "C++" ), false, 1 );
-
 	m_xrc = new XrcPanel( m_notebook, -1 );
 	m_notebook->AddPage( m_xrc, wxT( "XRC" ), false, 2 );
 
@@ -1530,8 +1362,7 @@ wxWindow * MainFrame::CreateObjectTree( wxWindow *parent )
 wxWindow * MainFrame::CreateObjectInspector( wxWindow *parent )
 {
 	//TO-DO: make object inspector style selectable.
-	int style = ( m_style == wxFB_CLASSIC_GUI ? wxFB_OI_MULTIPAGE_STYLE : wxFB_OI_SINGLE_PAGE_STYLE );
-	m_objInsp = new ObjectInspector( parent, -1, style );
+	m_objInsp = new ObjectInspector( parent, -1, wxFB_OI_SINGLE_PAGE_STYLE );
 	return m_objInsp;
 }
 
@@ -1568,8 +1399,6 @@ void MainFrame::CreateWideGui()
 	m_rightSplitter->SplitVertically( designer, objectInspector, m_rightSplitterWidth );
 	m_rightSplitter->SetSashGravity( 1 );
 	m_rightSplitter->SetMinimumPaneSize( 2 );
-
-	m_style = wxFB_WIDE_GUI;
 
 	SetMinSize( wxSize( 700, 380 ) );
 }

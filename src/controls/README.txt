@@ -45,9 +45,6 @@ Includes:
 	2. wxPropGrid
 		Used to show all the properties of all the controls that can be placed
 		in wxFormBuilder.
-	
-	3. wxScintilla
-		Used to display the C++ and xrc code. It has syntax highlighting.
 
 Notes:
 	- Code::Blocks is a free cross-platform IDE and it can be found here:

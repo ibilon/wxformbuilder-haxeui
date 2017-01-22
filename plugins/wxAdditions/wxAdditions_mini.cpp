@@ -40,9 +40,6 @@
 #include <wx/propgrid/advprops.h>
 #include <wx/propgrid/manager.h>
 
-// wxScintilla
-#include <wx/wxScintilla/wxscintilla.h>
-
 // wxWidgets
 #include <wx/xrc/xmlres.h>
 
@@ -65,7 +62,7 @@ public:
 
 protected:
 	// Enable folding for wxScintilla
-	void OnMarginClick ( wxScintillaEvent& event );
+	//void OnMarginClick ( wxScintillaEvent& event );
 
 	void OnFlatNotebookPageChanged( wxFlatNotebookEvent& event )
 	{
@@ -121,7 +118,6 @@ protected:
 BEGIN_EVENT_TABLE( ComponentEvtHandler, wxEvtHandler )
 	EVT_FLATNOTEBOOK_PAGE_CHANGED( -1, ComponentEvtHandler::OnFlatNotebookPageChanged )
 	EVT_FLATNOTEBOOK_PAGE_CLOSING( -1, ComponentEvtHandler::OnFlatNotebookPageClosing )
-	EVT_SCI_MARGINCLICK( -1, ComponentEvtHandler::OnMarginClick )
 END_EVENT_TABLE()
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -486,148 +482,6 @@ public:
 	}
 };
 
-///////////////////////////////////////////////////////////////////////////////
-
-class ScintillaComponent : public ComponentBase
-{
-public:
-	wxObject* Create( IObject* obj, wxObject* parent )
-	{
-		wxScintilla* m_code = new wxScintilla( 	(wxWindow *)parent, -1,
-												obj->GetPropertyAsPoint(_("pos")),
-												obj->GetPropertyAsSize(_("size")),
-												obj->GetPropertyAsInteger(_("window_style")),
-												obj->GetPropertyAsString(_("name"))
-											);
-
-		// Line Numbers
-		if ( 0 != obj->GetPropertyAsInteger(_("line_numbers") ) )
-		{
-			m_code->SetMarginType( 0, wxSCI_MARGIN_NUMBER );
-			m_code->SetMarginWidth( 0, m_code->TextWidth (wxSCI_STYLE_LINENUMBER, wxT("_99999"))  );
-		}
-		else
-		{
-			m_code->SetMarginWidth( 0, 0 );
-		}
-
-		// markers
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDER, wxSCI_MARK_BOXPLUS);
-		m_code->MarkerSetBackground (wxSCI_MARKNUM_FOLDER, wxColour (wxT("BLACK")));
-		m_code->MarkerSetForeground (wxSCI_MARKNUM_FOLDER, wxColour (wxT("WHITE")));
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDEROPEN, wxSCI_MARK_BOXMINUS);
-		m_code->MarkerSetBackground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (wxT("BLACK")));
-		m_code->MarkerSetForeground (wxSCI_MARKNUM_FOLDEROPEN, wxColour (wxT("WHITE")));
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDERSUB, wxSCI_MARK_EMPTY);
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDEREND, wxSCI_MARK_BOXPLUS);
-		m_code->MarkerSetBackground (wxSCI_MARKNUM_FOLDEREND, wxColour (wxT("BLACK")));
-		m_code->MarkerSetForeground (wxSCI_MARKNUM_FOLDEREND, wxColour (wxT("WHITE")));
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_BOXMINUS);
-		m_code->MarkerSetBackground (wxSCI_MARKNUM_FOLDEROPENMID, wxColour (wxT("BLACK")));
-		m_code->MarkerSetForeground (wxSCI_MARKNUM_FOLDEROPENMID, wxColour (wxT("WHITE")));
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_EMPTY);
-		m_code->MarkerDefine (wxSCI_MARKNUM_FOLDERTAIL, wxSCI_MARK_EMPTY);
-
-		// folding
-		if ( 0 != obj->GetPropertyAsInteger(_("folding") ) )
-		{
-			m_code->SetMarginType (1, wxSCI_MARGIN_SYMBOL);
-			m_code->SetMarginMask (1, wxSCI_MASK_FOLDERS);
-			m_code->SetMarginWidth (1, 16);
-			m_code->SetMarginSensitive (1, true);
-
-			m_code->SetProperty( wxT("fold"), wxT("1") );
-			m_code->SetFoldFlags( wxSCI_FOLDFLAG_LINEBEFORE_CONTRACTED | wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED );
-		}
-		else
-		{
-			m_code->SetMarginWidth( 1, 0 );
-		}
-		m_code->SetIndentationGuides( ( 0 != obj->GetPropertyAsInteger( _("indentation_guides") ) ) );
-
-		m_code->SetMarginWidth( 2, 0 );
-
-		m_code->SetLexer(wxSCI_LEX_CPP);
-		m_code->SetKeyWords(0, wxT("asm auto bool break case catch char class const const_cast \
-							   continue default delete do double dynamic_cast else enum explicit \
-							   export extern false float for friend goto if inline int long \
-							   mutable namespace new operator private protected public register \
-							   reinterpret_cast return short signed sizeof static static_cast \
-							   struct switch template this throw true try typedef typeid \
-							   typename union unsigned using virtual void volatile wchar_t \
-							   while"));
-
-		wxFont font(10, wxMODERN, wxNORMAL, wxNORMAL);
-		if ( !obj->GetPropertyAsString(_("font")).empty() )
-		{
-			font = obj->GetPropertyAsFont(_("font"));
-		}
-
-		m_code->StyleSetFont(wxSCI_STYLE_DEFAULT, font );
-
-		m_code->StyleClearAll();
-		m_code->StyleSetBold(wxSCI_C_WORD, true);
-		m_code->StyleSetForeground(wxSCI_C_WORD, *wxBLUE);
-		m_code->StyleSetForeground(wxSCI_C_STRING, *wxRED);
-		m_code->StyleSetForeground(wxSCI_C_STRINGEOL, *wxRED);
-		m_code->StyleSetForeground(wxSCI_C_PREPROCESSOR, wxColour(49, 106, 197));
-		m_code->StyleSetForeground(wxSCI_C_COMMENT, wxColour(0, 128, 0));
-		m_code->StyleSetForeground(wxSCI_C_COMMENTLINE, wxColour(0, 128, 0));
-		m_code->StyleSetForeground(wxSCI_C_COMMENTDOC, wxColour(0, 128, 0));
-		m_code->StyleSetForeground(wxSCI_C_COMMENTLINEDOC, wxColour(0, 128, 0));
-		m_code->StyleSetForeground(wxSCI_C_NUMBER, *wxBLUE );
-		m_code->SetUseTabs( ( 0 != obj->GetPropertyAsInteger( _("use_tabs") ) ) );
-		m_code->SetTabWidth( obj->GetPropertyAsInteger( _("tab_width") ) );
-		m_code->SetTabIndents( ( 0 != obj->GetPropertyAsInteger( _("tab_indents") ) ) );
-		m_code->SetBackSpaceUnIndents( ( 0 != obj->GetPropertyAsInteger( _("backspace_unindents") ) ) );
-		m_code->SetIndent( obj->GetPropertyAsInteger( _("tab_width") ) );
-		m_code->SetSelBackground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHT));
-		m_code->SetSelForeground(true, wxSystemSettings::GetColour(wxSYS_COLOUR_HIGHLIGHTTEXT));
-		m_code->SetViewEOL( ( 0 != obj->GetPropertyAsInteger( _("view_eol") ) ) );
-		m_code->SetViewWhiteSpace( ( 0 != obj->GetPropertyAsInteger( _("view_whitespace") ) ) );
-
-		m_code->SetCaretWidth(2);
-
-		m_code->SetText( 	wxT( "/** Sample Class to Display wxScintilla */\n" )
-							wxT( "class ScintillaSampleCode\n" )
-							wxT( "{\n" )
-							wxT( "private:\n" )
-							wxT( "\tint m_privateMember;\n\n" )
-							wxT( "public:\n\n" )
-							wxT( "\t// Sample Member Function\n" )
-							wxT( "\tint SampleFunction( int sample = 0 )\n" )
-							wxT( "\t{\n" )
-							wxT( "\t\treturn sample;\n" )
-							wxT( "\t}\n" )
-							wxT( "};\n" )
-						);
-
-		m_code->PushEventHandler( new ComponentEvtHandler( m_code, GetManager() ) );
-
-		return m_code;
-	}
-};
-
-void ComponentEvtHandler::OnMarginClick( wxScintillaEvent& event )
-{
-	wxScintilla* scintilla = wxDynamicCast( m_window, wxScintilla );
-	if ( scintilla != NULL )
-	{
-		if ( event.GetMargin() == 1 )
-		{
-			int lineClick = scintilla->LineFromPosition( event.GetPosition() );
-			int levelClick = scintilla->GetFoldLevel( lineClick );
-			if ( ( levelClick & wxSCI_FOLDLEVELHEADERFLAG ) > 0 )
-			{
-				scintilla->ToggleFold( lineClick );
-			}
-		}
-	}
-	event.Skip();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
 BEGIN_LIBRARY()
 
 // Load additional XRC handlers
@@ -690,9 +544,5 @@ MACRO(wxFNB_CUSTOM_FOREIGN_DRAG)
 MACRO(wxFNB_CUSTOM_LOCAL_DRAG)
 MACRO(wxFNB_CUSTOM_CLOSE_BUTTON)
 MACRO(wxFNB_CUSTOM_ALL)
-
-
-// wxScintilla
-WINDOW_COMPONENT("wxScintilla", ScintillaComponent )
 
 END_LIBRARY()

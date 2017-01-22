@@ -36,7 +36,6 @@
 #include "utils/stringutils.h"
 #include "utils/wxfbipc.h"
 #include "utils/wxfbexception.h"
-#include "codegen/cppcg.h"
 #include "codegen/xrccg.h"
 #include "codegen/codewriter.h"
 #include "rad/xrcpreview/xrcpreview.h"
@@ -1116,9 +1115,6 @@ void ApplicationData::MergeProject( PObjectBase project )
 
 	for ( unsigned int i = 0; i < project->GetChildCount(); i++ )
 	{
-		//m_project->AddChild(project->GetChild(i));
-		//project->GetChild(i)->SetParent(m_project);
-
 		PObjectBase child = project->GetChild( i );
 		RemoveEmptyItems( child );
 
@@ -1976,8 +1972,6 @@ void ApplicationData::GenerateInheritedClass( PObjectBase form, wxString classNa
 		genfileProp->SetValue( genFile.GetFullPath() );
 		typeProp->SetValue( form->GetClassName() );
 
-		CppCodeGenerator codegen;
-
 		// Determine if Microsoft BOM should be used
 		bool useMicrosoftBOM = false;
 		PProperty pUseMicrosoftBOM = project->GetProperty( _("use_microsoft_bom") );
@@ -1999,11 +1993,6 @@ void ApplicationData::GenerateInheritedClass( PObjectBase form, wxString classNa
 		const wxString& fullPath = inherFile.GetFullPath();
 		PCodeWriter h_cw( new FileCodeWriter( fullPath + wxT(".h"), useMicrosoftBOM, useUtf8 ) );
 		PCodeWriter cpp_cw( new FileCodeWriter( fullPath + wxT(".cpp"), useMicrosoftBOM, useUtf8 ) );
-
-		codegen.SetHeaderWriter( h_cw );
-		codegen.SetSourceWriter( cpp_cw );
-
-		codegen.GenerateInheritedClass( obj, form );
 
 		wxLogStatus( wxT( "Class generated at \'%s\'." ), path.c_str() );
 	}

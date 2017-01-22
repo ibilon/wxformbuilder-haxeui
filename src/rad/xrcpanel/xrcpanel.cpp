@@ -42,7 +42,6 @@
 
 #include <wx/fdrepdlg.h>
 
-#include <wx/wxScintilla/wxscintilla.h>
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
 
 BEGIN_EVENT_TABLE( XrcPanel,  wxPanel )
@@ -64,13 +63,11 @@ XrcPanel::XrcPanel( wxWindow *parent, int id )
 	wxBoxSizer *top_sizer = new wxBoxSizer( wxVERTICAL );
 
 	m_xrcPanel = new CodeEditor( this, -1 );
-	InitStyledTextCtrl( m_xrcPanel->GetTextCtrl() );
 
 	top_sizer->Add( m_xrcPanel, 1, wxEXPAND, 0 );
 
 	SetSizer( top_sizer );
 	SetAutoLayout( true );
-	//top_sizer->SetSizeHints( this );
 	top_sizer->Fit( this );
 	top_sizer->Layout();
 
@@ -80,35 +77,6 @@ XrcPanel::XrcPanel( wxWindow *parent, int id )
 XrcPanel::~XrcPanel()
 {
 	AppData()->RemoveHandler( this->GetEventHandler() );
-}
-
-void XrcPanel::InitStyledTextCtrl( wxScintilla *stc )
-{
-	stc->SetLexer( wxSCI_LEX_XML );
-
-#ifdef __WXGTK__
-	// Debe haber un bug en wxGTK ya que la familia wxMODERN no es de ancho fijo.
-	wxFont font( 8, wxMODERN, wxNORMAL, wxNORMAL );
-	font.SetFaceName( wxT( "Monospace" ) );
-#else
-	wxFont font( 10, wxMODERN, wxNORMAL, wxNORMAL );
-#endif
-
-	stc->StyleSetFont( wxSCI_STYLE_DEFAULT, font );
-	stc->StyleClearAll();
-	stc->StyleSetForeground( wxSCI_H_DOUBLESTRING, *wxRED );
-	stc->StyleSetForeground( wxSCI_H_TAG, wxColour( 0, 0, 128 ) );
-	stc->StyleSetForeground( wxSCI_H_ATTRIBUTE, wxColour( 128, 0, 128 ) );
-	stc->SetUseTabs( false );
-	stc->SetTabWidth( 4 );
-	stc->SetTabIndents( true );
-	stc->SetBackSpaceUnIndents( true );
-	stc->SetIndent( 4 );
-	stc->SetSelBackground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHT ) );
-	stc->SetSelForeground( true, wxSystemSettings::GetColour( wxSYS_COLOUR_HIGHLIGHTTEXT ) );
-
-	stc->SetCaretWidth( 2 );
-	stc->SetReadOnly( true );
 }
 
 void XrcPanel::OnFind( wxFindDialogEvent& event )
@@ -179,19 +147,9 @@ void XrcPanel::OnCodeGeneration( wxFBEvent& event )
 	if ( IsShown() )
 	{
 		Freeze();
-		wxScintilla* editor = m_xrcPanel->GetTextCtrl();
-		editor->SetReadOnly( false );
-		int line = editor->GetFirstVisibleLine() + editor->LinesOnScreen() - 1;
-		int xOffset = editor->GetXOffset();
-
 		XrcCodeGenerator codegen;
 		codegen.SetWriter( m_cw );
 		codegen.GenerateCode( project );
-		editor->SetReadOnly( true );
-		editor->GotoLine( line );
-		editor->SetXOffset( xOffset );
-		editor->SetAnchor( 0 );
-		editor->SetCurrentPos( 0 );
 		Thaw();
 	}
 

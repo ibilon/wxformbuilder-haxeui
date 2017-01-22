@@ -29,22 +29,19 @@
 #define __CODE_EDITOR__
 
 #include <wx/panel.h>
-
-class wxScintilla;
-class wxScintillaEvent;
+#include <wx/textctrl.h>
 
 class wxFindDialogEvent;
 
 class CodeEditor : public wxPanel
 {
 private:
-	wxScintilla* m_code;
-	void OnMarginClick( wxScintillaEvent& event );
+	wxTextCtrl* m_code;
 	DECLARE_EVENT_TABLE()
 
 public:
 	CodeEditor( wxWindow *parent, int id );
-	wxScintilla* GetTextCtrl();
+	wxTextCtrl* GetTextCtrl();
 
 	void OnFind( wxFindDialogEvent& event );
 };

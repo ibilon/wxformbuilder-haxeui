@@ -27,7 +27,6 @@
 
 #include "customkeys.h"
 #include "utils/debug.h"
-#include "codegen/cppcg.h"
 #include "model/objectbase.h"
 
 #include <rad/appdata.h>
@@ -41,37 +40,16 @@ void CustomKeysEvtHandler::OnKeyPress(wxKeyEvent &event)
   Debug::Print( wxT("%d"),event.GetKeyCode());
 
   if (event.GetKeyCode() == WXK_DELETE)
-    AppData()->RemoveObject(AppData()->GetSelectedObject());
-  else if (event.GetKeyCode() == 'P')
   {
-    /////
-    // prueba del parser
-    /////
-
-    Debug::Print( wxT("#### Prueba del parser ####") );
-
-    PObjectBase obj = AppData()->GetSelectedObject();
-    PCodeInfo code_info = obj->GetObjectInfo()->GetCodeInfo( wxT("C++") );
-
-    Debug::Print( wxT("#### Plantillas ####") );
-    //Debug::Print((wxChar *)(code_info->GetTemplate( wxT("construction") ).c_str()));
-    //Debug::Print((wxChar *)(code_info->GetTemplate( wxT("declaration") ).c_str()));
-
-    Debug::Print( wxT("#### Código ####") );
-    {
-      CppTemplateParser parser(obj,code_info->GetTemplate( wxT("construction") ), false, false, wxEmptyString );
-      //Debug::Print((wxChar *)parser.ParseTemplate().c_str());
-    }
-    {
-      CppTemplateParser parser(obj,code_info->GetTemplate( wxT("declaration") ), false, false, wxEmptyString );
-      //Debug::Print((wxChar *)parser.ParseTemplate().c_str());
-    }
+    AppData()->RemoveObject(AppData()->GetSelectedObject());
   }
   else if (event.GetKeyCode() == 'C')
   {
     AppData()->GenerateCode();
   }
   else
+  {
     event.Skip();
+  }
 }
 

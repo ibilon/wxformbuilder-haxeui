@@ -29,6 +29,7 @@
 #define __CODE_WRITER__
 
 #include <wx/string.h>
+#include <wx/textctrl.h>
 
 /** Abstracts the code generation from the target.
 Because, in some cases the target is a file, sometimes a TextCtrl, and sometimes both.
@@ -42,7 +43,7 @@ private:
 
 protected:
 	/// Write a wxString.
-	virtual void DoWrite( wxString code ) = 0;
+	virtual void DoWrite( const wxString& code ) = 0;
 
 	/// Returns the size of the indentation - was useful when using spaces, now it is 1 because using tabs.
 	virtual int GetIndentSize();
@@ -78,20 +79,20 @@ public:
 	virtual void Clear() = 0;
 };
 
-class wxScintilla;
+//class wxScintilla;
 
 class TCCodeWriter : public CodeWriter
 {
 private:
-	wxScintilla *m_tc;
+	wxTextCtrl *m_tc;
 
 protected:
-	void DoWrite( wxString code );
+	void DoWrite( const wxString& code );
 
 public:
 	TCCodeWriter();
-	TCCodeWriter( wxScintilla *tc );
-	void SetTextCtrl( wxScintilla* tc );
+	TCCodeWriter( wxTextCtrl *tc );
+	void SetTextCtrl( wxTextCtrl* tc );
 	void Clear();
 };
 
@@ -99,7 +100,7 @@ class StringCodeWriter : public CodeWriter
 {
 protected:
 	wxString m_buffer;
-	void DoWrite( wxString code );
+	void DoWrite( const wxString& code );
 
 public:
 	StringCodeWriter();

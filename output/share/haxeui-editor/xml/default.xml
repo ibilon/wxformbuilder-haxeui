@@ -11,9 +11,8 @@
 		1000
 	</property>
     <property name="code_generation" type="bitlist">
-      <option name="C++" help="Generate C++ Code" />
       <option name="XRC" help="Generate XRC Code"/>
-      C++
+      XRC
 	</property>
 	<category name="C++ Properties">
 		<property name="use_enum" type="bool" help="For C++ Only.&#x0A;Generate an enumeration for control IDs instead of a list of #defines">0</property>

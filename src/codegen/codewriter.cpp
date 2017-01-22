@@ -33,8 +33,6 @@
 #include <wx/file.h>
 #include <wx/tokenzr.h>
 
-#include <wx/wxScintilla/wxscintilla.h>
-
 #include <fstream>
 #include <cstring>
 
@@ -133,33 +131,33 @@ m_tc( 0 )
 {
 }
 
-TCCodeWriter::TCCodeWriter( wxScintilla* tc )
+TCCodeWriter::TCCodeWriter( wxTextCtrl* tc )
 {
 	SetTextCtrl( tc );
 }
 
-void TCCodeWriter::SetTextCtrl( wxScintilla* tc )
+void TCCodeWriter::SetTextCtrl( wxTextCtrl* tc )
 {
 	m_tc = tc;
 }
 
-void TCCodeWriter::DoWrite( wxString code )
+void TCCodeWriter::DoWrite( const wxString& code )
 {
 	if ( m_tc )
-		m_tc->AddText( code );
+		(*m_tc) << code;
 }
 
 void TCCodeWriter::Clear()
 {
 	if ( m_tc )
-		m_tc->ClearAll(); //*!*
+		m_tc->Clear();
 }
 
 StringCodeWriter::StringCodeWriter()
 {
 }
 
-void StringCodeWriter::DoWrite( wxString code )
+void StringCodeWriter::DoWrite( const wxString& code )
 {
 	m_buffer += code;
 }

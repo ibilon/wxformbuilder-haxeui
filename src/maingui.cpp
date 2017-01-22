@@ -62,15 +62,6 @@
 
 void LogStack();
 
-/*static const wxCmdLineEntryDesc s_cmdLineDesc[] =
-{
-	{ wxCMD_LINE_SWITCH, wxT("g"), wxT("generate"),	wxT("Generate code from passed file.") },
-	{ wxCMD_LINE_OPTION, wxT("l"), wxT("language"),	wxT("Override the code_generation property from the passed file and generate the passed languages. Separate multiple languages with commas.") },
-	{ wxCMD_LINE_SWITCH, wxT("h"), wxT("help"),		wxT("Show this help message."), wxCMD_LINE_VAL_STRING, wxCMD_LINE_OPTION_HELP  },
-	{ wxCMD_LINE_PARAM, NULL, NULL,	wxT("File to open."), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-	{ wxCMD_LINE_NONE }
-};*/
-
 IMPLEMENT_APP( MyApp )
 
 int MyApp::OnRun()
@@ -101,48 +92,12 @@ int MyApp::OnRun()
 	// Message output to the same as the log target
 	delete wxMessageOutput::Set( new wxMessageOutputLog );
 
-	// Parse command line
-	/*wxCmdLineParser parser( s_cmdLineDesc, argc, argv );
-	if ( 0 != parser.Parse() )
-	{
-		return 1;
-	}*/
-
 	// Get project to load
 	wxString projectToLoad = wxEmptyString;
-	/*if ( parser.GetParamCount() > 0 )
-	{
-		projectToLoad = parser.GetParam();
-	}*/
 
 	bool justGenerate = false;
 	wxString language;
-	/*bool hasLanguage = parser.Found( wxT("l"), &language );
-	if ( parser.Found( wxT("g") ) )
-	{
-		if ( projectToLoad.empty() )
-		{
-			wxLogError( _("You must pass a path to a project file. Nothing to generate.") );
-			return 2;
-		}
-
-		if ( hasLanguage )
-		{
-			if ( language.empty() )
-			{
-				wxLogError( _("Empty language option. Nothing generated.") );
-				return 3;
-			}
-			language.Replace( wxT(","), wxT("|"), true );
-		}
-
-		// generate code
-		justGenerate = true;
-	}
-	else*/
-	{
-		delete wxLog::SetActiveTarget( new wxLogGui );
-	}
+	delete wxLog::SetActiveTarget( new wxLogGui );
 
 	// Create singleton AppData - wait to initialize until sure that this is not the second
 	// instance of a project file.
@@ -231,15 +186,9 @@ int MyApp::OnRun()
 	config->Read( wxT( "SizeW" ), &w );
 	config->Read( wxT( "SizeH" ), &h );
 
-	long style = config->Read( wxT("style"), wxFB_WIDE_GUI );
-	if ( style != wxFB_CLASSIC_GUI )
-	{
-		style = wxFB_WIDE_GUI;
-	}
-
 	config->SetPath( wxT("/") );
 
-	m_frame = new MainFrame( NULL ,-1, (int)style, wxPoint( x, y ), wxSize( w, h ) );
+	m_frame = new MainFrame( NULL ,-1, wxPoint( x, y ), wxSize( w, h ) );
 	if ( !justGenerate )
 	{
 		m_frame->Show( TRUE );
@@ -271,25 +220,8 @@ int MyApp::OnRun()
 	{
 		if ( AppData()->LoadProject( projectToLoad, !justGenerate ) )
 		{
-			/*if ( justGenerate )
-			{
-				if ( hasLanguage )
-				{
-					PObjectBase project = AppData()->GetProjectData();
-					PProperty codeGen = project->GetProperty( _("code_generation") );
-					if ( codeGen )
-					{
-						codeGen->SetValue( language );
-					}
-				}
-				AppData()->GenerateCode( false );
-				return 0;
-			}
-			else*/
-			{
-				m_frame->InsertRecentProject( projectToLoad );
-				return wxApp::OnRun();
-			}
+			m_frame->InsertRecentProject( projectToLoad );
+			return wxApp::OnRun();
 		}
 		else
 		{

@@ -9,9 +9,9 @@ endif
 
 export CONFIG
 
-.PHONY: all clean wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
+.PHONY: all clean wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
-all: wxPropGrid wxFlatNotebook wxScintilla plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
+all: wxPropGrid wxFlatNotebook plugin-interface TiCPP additional-components-plugin common-components-plugin containers-components-plugin layout-components-plugin wxadditions-mini-plugin HaxeUI-editor
 
 wxPropGrid:
 	@echo ==== Building wxPropGrid ====
@@ -20,10 +20,6 @@ wxPropGrid:
 wxFlatNotebook:
 	@echo ==== Building wxFlatNotebook ====
 	@$(MAKE) --no-print-directory -C src/controls/build/wxFlatNotebook
-
-wxScintilla:
-	@echo ==== Building wxScintilla ====
-	@$(MAKE) --no-print-directory -C src/controls/build/wxScintilla
 
 plugin-interface: TiCPP
 	@echo ==== Building plugin-interface ====
@@ -49,18 +45,17 @@ layout-components-plugin: plugin-interface TiCPP
 	@echo ==== Building layout-components-plugin ====
 	@$(MAKE) --no-print-directory -C plugins/layout
 
-wxadditions-mini-plugin: wxFlatNotebook wxPropGrid wxScintilla plugin-interface TiCPP
+wxadditions-mini-plugin: wxFlatNotebook wxPropGrid plugin-interface TiCPP
 	@echo ==== Building wxadditions-mini-plugin ====
 	@$(MAKE) --no-print-directory -C plugins/wxAdditions
 
-HaxeUI-editor: wxFlatNotebook wxPropGrid wxScintilla TiCPP plugin-interface
+HaxeUI-editor: wxFlatNotebook wxPropGrid TiCPP plugin-interface
 	@echo ==== Building HaxeUI-editor ====
 	@$(MAKE) --no-print-directory -C src
 
 clean:
 	@$(MAKE) --no-print-directory -C src/controls/build/propgrid clean
 	@$(MAKE) --no-print-directory -C src/controls/build/wxFlatNotebook clean
-	@$(MAKE) --no-print-directory -C src/controls/build/wxScintilla clean
 	@$(MAKE) --no-print-directory -C sdk/plugin_interface clean
 	@$(MAKE) --no-print-directory -C sdk/tinyxml clean
 	@$(MAKE) --no-print-directory -C plugins/additional clean

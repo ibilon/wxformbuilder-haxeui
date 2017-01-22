@@ -30,7 +30,6 @@
 
 #include "wx/wx.h"
 #include <wx/wxFlatNotebook/wxFlatNotebook.h>
-//#include "wx/aui/aui.h"
 #include "wx/splitter.h"
 #include <wx/fdrepdlg.h>
 
@@ -39,7 +38,6 @@ class wxFBObjectEvent;
 class wxFBPropertyEvent;
 class wxFBEventHandlerEvent;
 
-class CppPanel;
 class XrcPanel;
 class ObjectTree;
 class ObjectInspector;
@@ -76,9 +74,7 @@ class MainFrame : public wxFrame
   ObjectTree *m_objTree;
   ObjectInspector *m_objInsp;
   VisualEditor *m_visualEdit;
-  CppPanel *m_cpp;
   XrcPanel *m_xrc;
-  int m_style;
 
   // Save which page is selected
   int m_page_selection;
@@ -110,7 +106,7 @@ class MainFrame : public wxFrame
 
   DECLARE_EVENT_TABLE()
  public:
-  MainFrame(wxWindow *parent, int id = -1, int style = wxFB_DEFAULT_GUI, wxPoint pos = wxDefaultPosition, wxSize size = wxSize( 1000, 800 ) );
+  MainFrame(wxWindow *parent, int id = -1, wxPoint pos = wxDefaultPosition, wxSize size = wxSize( 1000, 800 ) );
   ~MainFrame();
   void RestorePosition(const wxString &name);
   void SavePosition(const wxString &name);
