@@ -28,5 +28,3 @@ include_directories("src/" "src/codegen/" "src/md5/" "src/model/" "src/rad/" "sr
 
 add_executable(haxeui-editor ${SOURCES_main})
 target_link_libraries(haxeui-editor ${wxWidgets_LIBRARIES} "wx_gtk2u_propgrid-3.0_wxfb")
-#-I "controls/include" -I "../src" -I "../sdk/tinyxml" -I "../sdk/plugin_interface"
-# -Wl,-rpath,/usr/lib/haxeui-editor -L"../output/lib/haxeui-editor" -l
