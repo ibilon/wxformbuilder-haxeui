@@ -1320,7 +1320,7 @@ wxWindow * MainFrame::CreateDesignerWindow( wxWindow *parent )
 	wxConfigBase* config = wxConfigBase::Get();
 	config->Read( wxT("/mainframe/editor/notebook_style"), &nbStyle, wxNB_BOTTOM);
 
-	m_notebook = new wxNotebook( parent, ID_EDITOR_NB, wxDefaultPosition, wxDefaultSize, nbStyle);
+	m_notebook = new wxNotebook( parent, ID_EDITOR_NB, wxDefaultPosition, wxDefaultSize, nbStyle | wxNB_BOTTOM);
 
 	// Set notebook icons
 	m_icons.Add( AppBitmaps::GetBitmap( wxT( "designer" ), 16 ) );

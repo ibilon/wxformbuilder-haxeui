@@ -616,7 +616,7 @@ ObjectInspector::ObjectInspector( wxWindow* parent, int id, int style )
 	wxConfigBase* config = wxConfigBase::Get();
 	config->Read(wxT("/mainframe/objectInspector/notebook_style"), &nbStyle);
 
-	m_nb = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, nbStyle);
+	m_nb = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_TOP);
 
 	// the colour of property grid description looks ugly if we don't set this
 	// colour
