@@ -114,7 +114,7 @@ static wxString XrcTextToString( const wxString &str )
 }
 
 static wxString ReplaceSynonymous( const wxString &bitlist )
-{
+{/*
 	IComponentLibrary* lib = GetComponentLibrary( NULL );
 	wxString result, translation;
 	wxStringTokenizer tkz( bitlist, wxT( "|" ) );
@@ -136,6 +136,9 @@ static wxString ReplaceSynonymous( const wxString &bitlist )
 	}
 	delete lib;
 
+	return result;
+	*/
+	wxString result = "";
 	return result;
 }
 
